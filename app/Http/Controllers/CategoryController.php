@@ -15,10 +15,10 @@ class CategoryController extends Controller
     {
         $this->middleware(['auth:api']);
 
-//        $this->middleware(['can:users.create'],['only' => ['store']]);
-//        $this->middleware(['can:users.read'],['only' => ['index', 'show']]);
-//        $this->middleware(['can:users.update'],['only' => ['update']]);
-//        $this->middleware(['can:users.delete'],['only' => ['destroy']]);
+        $this->middleware(['permission:categories.create'],['only' => ['store']]);
+        $this->middleware(['permission:categories.read'],['only' => ['index', 'show']]);
+        $this->middleware(['permission:categories.update'],['only' => ['update']]);
+        $this->middleware(['permission:categories.delete'],['only' => ['destroy']]);
     }
     public function index()
     {

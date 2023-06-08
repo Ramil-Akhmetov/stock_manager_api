@@ -16,13 +16,13 @@ class UserSeeder extends Seeder
             'name' => 'Super-Admin',
             'email' => 'superadmin@email.com',
         ]);
-//        $user->assignRole('Super-Admin');
+        $user->assignRole('Super-Admin');
 
         $user = \App\Models\User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@email.com',
         ]);
-//        $user->assignRole('Admin');
+        $user->assignRole('Admin');
 
         $user = \App\Models\User::factory()->create([
             'name' => 'user',
