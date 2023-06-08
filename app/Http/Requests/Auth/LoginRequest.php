@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class LoginRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,9 +24,17 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string',
         ];
     }
+
+//    public function validated($key = null, $default = null)
+//    {
+//        $data = $this->validator->validated();
+//        if ($this->input('password')) {
+//            $data['password'] = Hash::make($this->input('password'));
+//        }
+//        return $data;
+//    }
 }

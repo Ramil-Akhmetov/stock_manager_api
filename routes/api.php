@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 include_once __DIR__ . '/auth.php';
+
+Route::apiResources([
+    'categories' => \App\Http\Controllers\CategoryController::class,
+]);

@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -18,32 +19,25 @@ class AuthController extends Controller
         $user = User::create($validated);
 
         $token = $user->createToken('auth')->accessToken;
-        $response = ['token' => $token];
-        return response($response, 200);
+        return response()->json([
+            'token' => $token
+        ]);
     }
 
     public function login(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-        if ($validator->fails()) {
-            return response(['errors' => $validator->errors()->all()], 422);
-        }
-        $user = User::where('email', $request->email)->first();
-        if ($user) {
-            if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken('auth')->accessToken;
-                $response = ['token' => $token];
-                return response($response, 200);
-            } else {
-                $response = ["message" => "Password mismatch"];
-                return response($response, 422);
-            }
+        $validated = $request->validated();
+        $user = User::where('email', $validated['email'])->first();
+
+        if ($user && Hash::check($validated['password'], $user->password)) {
+            $token = $user->createToken('auth')->accessToken;
+            return response()->json([
+                'token' => $token,
+            ]);
         } else {
-            $response = ["message" => 'User does not exist'];
-            return response($response, 422);
+            return response()->json([
+                'message' => 'Invalid email or password',
+            ]);
         }
     }
 
