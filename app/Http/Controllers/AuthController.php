@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -46,5 +47,10 @@ class AuthController extends Controller
         $token = $request->user()->token();
         $token->revoke();
         return response([], 200);
+    }
+
+    public function user(Request $request)
+    {
+        return new UserResource($request->user());
     }
 }

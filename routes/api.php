@@ -14,12 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 include_once __DIR__ . '/auth.php';
 
 Route::apiResources([
+    'users' => \App\Http\Controllers\UserController::class,
     'categories' => \App\Http\Controllers\CategoryController::class,
 ]);

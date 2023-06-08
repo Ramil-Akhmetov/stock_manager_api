@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Resources\User\UserResource;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,5 +14,5 @@ Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
+    Route::post('/user', [\App\Http\Controllers\AuthController::class, 'user']);
 });
-
