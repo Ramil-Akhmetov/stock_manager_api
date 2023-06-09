@@ -25,5 +25,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'categories.read']);
         Permission::create(['name' => 'categories.update']);
         Permission::create(['name' => 'categories.delete']);
+
+        Permission::create(['name' => 'items.create']);
+        Permission::create(['name' => 'items.read']);
+        Permission::create(['name' => 'items.update']);
+        Permission::create(['name' => 'items.delete']);
     }
 }

@@ -16,6 +16,7 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'Super-Admin']);
 
         $role = Role::create(['name' => 'Admin']);
+
         $role->givePermissionTo('users.create');
         $role->givePermissionTo('users.read');
         $role->givePermissionTo('users.update');
@@ -25,5 +26,10 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo('categories.read');
         $role->givePermissionTo('categories.update');
         $role->givePermissionTo('categories.delete');
+
+        $role->givePermissionTo('items.create');
+        $role->givePermissionTo('items.read');
+        $role->givePermissionTo('items.update');
+        $role->givePermissionTo('items.delete');
     }
 }

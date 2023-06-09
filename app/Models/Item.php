@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
-class Category extends Model
+class Item extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['code', 'name', 'extra_attributes'];
+    protected $fillable = ['code', 'name', 'quantity', 'unit', 'photo', 'extra_attributes'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
@@ -22,11 +22,6 @@ class Category extends Model
         return $this->extra_attributes->modelScope();
     }
 
-//    public function items()
-//    {
-//        return $this->hasMany(Item::class);
-//    }
-
     public function scopeFilter($query, array $filters)
     {
         //todo filter
@@ -35,6 +30,6 @@ class Category extends Model
 
     public function scopeSearch($query, $s)
     {
-        $query->where(fn ($q) => $q->where('code', 'like', "%$s%")->orWhere('name', 'like', "%$s%"));
+        $query->where(fn($q) => $q->where('code', 'like', "%$s%")->orWhere('name', 'like', "%$s%"));
     }
 }

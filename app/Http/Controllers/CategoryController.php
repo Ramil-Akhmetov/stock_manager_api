@@ -21,6 +21,9 @@ class CategoryController extends Controller
         $this->middleware(['permission:categories.delete'], ['only' => ['destroy']]);
     }
 
+    /**
+     * Display a listing of the resource.
+     */
     public function index(Request $request)
     {
         $filters = $request->all('search');

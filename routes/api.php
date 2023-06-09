@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +19,5 @@ include_once __DIR__ . '/auth.php';
 Route::apiResources([
     'users' => \App\Http\Controllers\UserController::class,
     'categories' => \App\Http\Controllers\CategoryController::class,
+    'items' => \App\Http\Controllers\ItemController::class,
 ]);
