@@ -7,22 +7,24 @@ use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['permission:categories.create'],['only' => ['store']]);
-        $this->middleware(['permission:categories.read'],['only' => ['index', 'show']]);
-        $this->middleware(['permission:categories.update'],['only' => ['update']]);
-        $this->middleware(['permission:categories.delete'],['only' => ['destroy']]);
+        $this->middleware(['permission:categories.create'], ['only' => ['store']]);
+        $this->middleware(['permission:categories.read'], ['only' => ['index', 'show']]);
+        $this->middleware(['permission:categories.update'], ['only' => ['update']]);
+        $this->middleware(['permission:categories.delete'], ['only' => ['destroy']]);
     }
-    public function index()
+
+    public function index(Request $request)
     {
-        $categories = Category::latest()->paginate();
+        $filters = $request->all('search');
+        $categories = Category::filter($filters)->paginate();
         return new CategoryCollection($categories);
     }
 
