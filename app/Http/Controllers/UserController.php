@@ -10,6 +10,15 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:api']);
+
+        $this->middleware(['can:users.create'],['only' => ['store']]);
+        $this->middleware(['can:users.read'],['only' => ['index', 'show']]);
+        $this->middleware(['can:users.update'],['only' => ['update']]);
+        $this->middleware(['can:users.delete'],['only' => ['destroy']]);
+    }
     public function index()
     {
         $users = User::with('roles')->paginate();
