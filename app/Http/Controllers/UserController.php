@@ -21,7 +21,7 @@ class UserController extends Controller
     }
     public function index()
     {
-        $users = User::with('roles')->paginate();
+        $users = User::paginate();
         return new UserCollection($users);
     }
 
