@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             GroupSeeder::class,
             RoomSeeder::class,
             ItemSeeder::class,
+            ConfirmationSeeder::class,
         ]);
     }
 }

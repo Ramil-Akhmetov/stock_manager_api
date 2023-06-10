@@ -41,6 +41,11 @@ class Item extends Model
         return $this->belongsTo(Room::class);
     }
 
+    public function confirmations()
+    {
+        return $this->hasMany(Confirmation::class);
+    }
+
     public function scopeWithExtraAttributes()
     {
         return $this->extra_attributes->modelScope();

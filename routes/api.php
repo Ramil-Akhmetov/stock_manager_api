@@ -23,4 +23,5 @@ Route::apiResources([
     'types' => \App\Http\Controllers\TypeController::class,
     'groups' => \App\Http\Controllers\GroupController::class,
     'rooms' => \App\Http\Controllers\RoomController::class,
+    'confirmations' => \App\Http\Controllers\ConfirmationController::class,
 ]);

@@ -36,6 +36,7 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $request)
     {
+        //todo add confirmation event
         $item = Item::create($request->validated());
         return new ItemResource($item);
     }
@@ -53,6 +54,7 @@ class ItemController extends Controller
      */
     public function update(UpdateItemRequest $request, Item $item)
     {
+        //todo add confirmation event
         $item->update($request->validated());
         return new ItemResource($item);
     }
