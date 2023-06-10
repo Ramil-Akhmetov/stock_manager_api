@@ -32,9 +32,14 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo('items.update');
         $role->givePermissionTo('items.delete');
 
-        $role->givePermissionTo('item_types.create');
-        $role->givePermissionTo('item_types.read');
-        $role->givePermissionTo('item_types.update');
-        $role->givePermissionTo('item_types.delete');
+        $role->givePermissionTo('types.create');
+        $role->givePermissionTo('types.read');
+        $role->givePermissionTo('types.update');
+        $role->givePermissionTo('types.delete');
+
+        $role->givePermissionTo('groups.create');
+        $role->givePermissionTo('groups.read');
+        $role->givePermissionTo('groups.update');
+        $role->givePermissionTo('groups.delete');
     }
 }

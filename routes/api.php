@@ -20,5 +20,6 @@ Route::apiResources([
     'users' => \App\Http\Controllers\UserController::class,
     'categories' => \App\Http\Controllers\CategoryController::class,
     'items' => \App\Http\Controllers\ItemController::class,
-    'item_types' => \App\Http\Controllers\ItemTypeController::class,
+    'types' => \App\Http\Controllers\TypeController::class,
+    'groups' => \App\Http\Controllers\GroupController::class,
 ]);

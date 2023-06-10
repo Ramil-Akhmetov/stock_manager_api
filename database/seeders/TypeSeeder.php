@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\ItemType;
+use App\Models\Type;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ItemTypeSeeder extends Seeder
+class TypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        ItemType::factory(30)->create();
+        Type::factory(30)->create();
     }
 }

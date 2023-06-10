@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\ItemType;
+namespace App\Http\Requests\Group;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateItemTypeRequest extends FormRequest
+class StoreGroupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
