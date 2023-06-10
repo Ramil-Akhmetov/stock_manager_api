@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('item_types', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
             $table->string('name');
-            $table->unsignedFloat('quantity')->nullable();
-            $table->string('unit')->nullable();
-            $table->text('photo')->nullable();
-//            $table->foreignIdFor();
             $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
             $table->softDeletes();
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('item_types');
     }
 };

@@ -7,32 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
-class Item extends Model
+class ItemType extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['code', 'name', 'quantity', 'unit', 'photo', 'extra_attributes'];
+    protected $fillable = ['name', 'extra_attributes'];
+
+    protected $hidden = ['deleted_at'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
     ];
 
-    protected $with = ['category', 'item_type'];
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function item_type()
-    {
-        return $this->belongsTo(ItemType::class);
-    }
-
-
     public function scopeWithExtraAttributes()
     {
         return $this->extra_attributes->modelScope();
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
     }
 
     public function scopeFilter($query, array $filters)

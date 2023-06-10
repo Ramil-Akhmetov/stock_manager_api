@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\ItemType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -21,6 +23,8 @@ class ItemFactory extends Factory
             'name' => fake()->word(),
             'code' => Str::random(5),
             'quantity' => fake()->numberBetween(0, 1000),
+            'category_id' => Category::all()->random()->id,
+            'item_type_id' => ItemType::all()->random()->id,
             'unit' => null,
             'photo' => null,
         ];

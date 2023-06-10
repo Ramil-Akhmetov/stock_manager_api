@@ -22,10 +22,10 @@ class Category extends Model
         return $this->extra_attributes->modelScope();
     }
 
-//    public function items()
-//    {
-//        return $this->hasMany(Item::class);
-//    }
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 
     public function scopeFilter($query, array $filters)
     {
