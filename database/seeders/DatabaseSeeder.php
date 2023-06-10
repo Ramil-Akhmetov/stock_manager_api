@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             TypeSeeder::class,
             GroupSeeder::class,
+            RoomSeeder::class,
             ItemSeeder::class,
         ]);
     }

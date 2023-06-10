@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Group;
+use App\Models\Room;
 use App\Models\Type;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->foreignIdFor(Category::class)->nullable();
             $table->foreignIdFor(Type::class)->nullable();
             $table->foreignIdFor(Group::class)->nullable();
+            $table->foreignIdFor(Room::class)->nullable();
             $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
             $table->softDeletes();

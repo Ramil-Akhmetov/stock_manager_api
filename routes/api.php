@@ -22,4 +22,5 @@ Route::apiResources([
     'items' => \App\Http\Controllers\ItemController::class,
     'types' => \App\Http\Controllers\TypeController::class,
     'groups' => \App\Http\Controllers\GroupController::class,
+    'rooms' => \App\Http\Controllers\RoomController::class,
 ]);

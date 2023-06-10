@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
-class Item extends Model
+class Room extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['code', 'name', 'quantity', 'unit', 'photo', 'extra_attributes'];
+    protected $fillable = ['name', 'number', 'user_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
@@ -19,31 +19,14 @@ class Item extends Model
         'extra_attributes' => SchemalessAttributes::class,
     ];
 
-    protected $with = ['category', 'type', 'group', 'room'];
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function type()
-    {
-        return $this->belongsTo(Type::class);
-    }
-
-    public function group()
-    {
-        return $this->belongsTo(Group::class);
-    }
-
-    public function room()
-    {
-        return $this->belongsTo(Room::class);
-    }
-
     public function scopeWithExtraAttributes()
     {
         return $this->extra_attributes->modelScope();
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
     }
 
     public function scopeFilter($query, array $filters)
