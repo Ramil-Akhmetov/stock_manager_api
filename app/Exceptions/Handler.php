@@ -24,12 +24,12 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->renderable(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
-            return response()->json([
-                'message' => 'You do not have the required authorization.',
-            ], 403);
-        });
-
+//        $this->renderable(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
+//            return response()->json([
+//                'message' => 'You do not have the required authorization.',
+//            ], 403);
+//        });
+//
         $this->renderable(function (NotFoundHttpException $e, $request) {
             return response()->json([
                 'message' => 'Not found',
@@ -39,6 +39,5 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
-
     }
 }

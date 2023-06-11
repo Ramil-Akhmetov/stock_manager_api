@@ -22,19 +22,20 @@ class Category extends Model
         return $this->extra_attributes->modelScope();
     }
 
-//    public function items()
-//    {
-//        return $this->hasMany(Item::class);
-//    }
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 
     public function scopeFilter($query, array $filters)
     {
-        $query->when($filters['trashed'] ?? null, fn ($q, $t) => $q->{$t . 'Trashed'}())
-            ->when($filters['search'] ?? null, fn ($query, $search) => $query->search($search));
+        //todo filter
+        $query->when($filters['search'] ?? null, fn($query, $search) => $query->search($search));
     }
 
     public function scopeSearch($query, $s)
     {
-        $query->where(fn ($q) => $q->where('code', 'like', "%$s%")->orWhere('name', 'like', "%$s%"));
+        $query->where('code', 'like', "%$s%")
+            ->orWhere('name', 'like', "%$s%");
     }
 }

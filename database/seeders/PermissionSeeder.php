@@ -25,5 +25,50 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'categories.read']);
         Permission::create(['name' => 'categories.update']);
         Permission::create(['name' => 'categories.delete']);
+
+        Permission::create(['name' => 'items.create']);
+        Permission::create(['name' => 'items.read']);
+        Permission::create(['name' => 'items.update']);
+        Permission::create(['name' => 'items.delete']);
+
+        Permission::create(['name' => 'types.create']);
+        Permission::create(['name' => 'types.read']);
+        Permission::create(['name' => 'types.update']);
+        Permission::create(['name' => 'types.delete']);
+
+        Permission::create(['name' => 'groups.create']);
+        Permission::create(['name' => 'groups.read']);
+        Permission::create(['name' => 'groups.update']);
+        Permission::create(['name' => 'groups.delete']);
+
+        Permission::create(['name' => 'rooms.create']);
+        Permission::create(['name' => 'rooms.read']);
+        Permission::create(['name' => 'rooms.update']);
+        Permission::create(['name' => 'rooms.delete']);
+
+        Permission::create(['name' => 'confirmations.create']);
+        Permission::create(['name' => 'confirmations.read']);
+        Permission::create(['name' => 'confirmations.update']);
+        Permission::create(['name' => 'confirmations.delete']);
+
+        Permission::create(['name' => 'customers.create']);
+        Permission::create(['name' => 'customers.read']);
+        Permission::create(['name' => 'customers.update']);
+        Permission::create(['name' => 'customers.delete']);
+
+        Permission::create(['name' => 'suppliers.create']);
+        Permission::create(['name' => 'suppliers.read']);
+        Permission::create(['name' => 'suppliers.update']);
+        Permission::create(['name' => 'suppliers.delete']);
+
+        Permission::create(['name' => 'checkins.create']);
+        Permission::create(['name' => 'checkins.read']);
+        Permission::create(['name' => 'checkins.update']);
+        Permission::create(['name' => 'checkins.delete']);
+
+        Permission::create(['name' => 'checkouts.create']);
+        Permission::create(['name' => 'checkouts.read']);
+        Permission::create(['name' => 'checkouts.update']);
+        Permission::create(['name' => 'checkouts.delete']);
     }
 }

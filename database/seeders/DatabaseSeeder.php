@@ -16,7 +16,17 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+
             CategorySeeder::class,
+            TypeSeeder::class,
+            GroupSeeder::class,
+            RoomSeeder::class,
+            ItemSeeder::class,
+            ConfirmationSeeder::class,
+            CustomerSeeder::class,
+            SupplierSeeder::class,
+            CheckinSeeder::class,
+            CheckoutSeeder::class,
         ]);
     }
 }

@@ -16,6 +16,7 @@ class RoleSeeder extends Seeder
         Role::create(['name' => 'Super-Admin']);
 
         $role = Role::create(['name' => 'Admin']);
+
         $role->givePermissionTo('users.create');
         $role->givePermissionTo('users.read');
         $role->givePermissionTo('users.update');
@@ -25,5 +26,50 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo('categories.read');
         $role->givePermissionTo('categories.update');
         $role->givePermissionTo('categories.delete');
+
+        $role->givePermissionTo('items.create');
+        $role->givePermissionTo('items.read');
+        $role->givePermissionTo('items.update');
+        $role->givePermissionTo('items.delete');
+
+        $role->givePermissionTo('types.create');
+        $role->givePermissionTo('types.read');
+        $role->givePermissionTo('types.update');
+        $role->givePermissionTo('types.delete');
+
+        $role->givePermissionTo('groups.create');
+        $role->givePermissionTo('groups.read');
+        $role->givePermissionTo('groups.update');
+        $role->givePermissionTo('groups.delete');
+
+        $role->givePermissionTo('rooms.create');
+        $role->givePermissionTo('rooms.read');
+        $role->givePermissionTo('rooms.update');
+        $role->givePermissionTo('rooms.delete');
+
+        $role->givePermissionTo('confirmations.create');
+        $role->givePermissionTo('confirmations.read');
+        $role->givePermissionTo('confirmations.update');
+        $role->givePermissionTo('confirmations.delete');
+
+        $role->givePermissionTo('customers.create');
+        $role->givePermissionTo('customers.read');
+        $role->givePermissionTo('customers.update');
+        $role->givePermissionTo('customers.delete');
+
+        $role->givePermissionTo('suppliers.create');
+        $role->givePermissionTo('suppliers.read');
+        $role->givePermissionTo('suppliers.update');
+        $role->givePermissionTo('suppliers.delete');
+
+        $role->givePermissionTo('checkins.create');
+        $role->givePermissionTo('checkins.read');
+        $role->givePermissionTo('checkins.update');
+        $role->givePermissionTo('checkins.delete');
+
+        $role->givePermissionTo('checkouts.create');
+        $role->givePermissionTo('checkouts.read');
+        $role->givePermissionTo('checkouts.update');
+        $role->givePermissionTo('checkouts.delete');
     }
 }
