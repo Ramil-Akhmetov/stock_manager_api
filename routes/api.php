@@ -27,4 +27,5 @@ Route::apiResources([
     'customers' => \App\Http\Controllers\CustomerController::class,
     'suppliers' => \App\Http\Controllers\SupplierController::class,
     'checkins' => \App\Http\Controllers\CheckinController::class,
+    'checkouts' => \App\Http\Controllers\CheckoutController::class,
 ]);

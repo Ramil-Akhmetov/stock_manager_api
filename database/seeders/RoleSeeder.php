@@ -66,5 +66,10 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo('checkins.read');
         $role->givePermissionTo('checkins.update');
         $role->givePermissionTo('checkins.delete');
+
+        $role->givePermissionTo('checkouts.create');
+        $role->givePermissionTo('checkouts.read');
+        $role->givePermissionTo('checkouts.update');
+        $role->givePermissionTo('checkouts.delete');
     }
 }

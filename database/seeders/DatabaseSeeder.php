@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+
             CategorySeeder::class,
             TypeSeeder::class,
             GroupSeeder::class,
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
             CustomerSeeder::class,
             SupplierSeeder::class,
             CheckinSeeder::class,
+            CheckoutSeeder::class,
         ]);
     }
 }
