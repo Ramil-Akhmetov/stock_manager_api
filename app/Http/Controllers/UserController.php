@@ -7,6 +7,7 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -19,9 +20,10 @@ class UserController extends Controller
         $this->middleware(['can:users.update'],['only' => ['update']]);
         $this->middleware(['can:users.delete'],['only' => ['destroy']]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate();
+        $filters = $request->all('search');
+        $users = User::filter($filters)->paginate();
         return new UserCollection($users);
     }
 

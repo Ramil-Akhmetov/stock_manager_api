@@ -31,4 +31,19 @@ class User extends Authenticatable
     {
         return $this->extra_attributes->modelScope();
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        //todo filter
+        $query->when($filters['search'] ?? null, fn($query, $search) => $query->search($search));
+    }
+
+    public function scopeSearch($query, $s)
+    {
+        $query->where('name', 'like', "%$s%")
+            ->orWhere('surname', 'like', "%$s%")
+            ->orWhere('patronymic', 'like', "%$s%")
+            ->orWhere('phone', 'like', "%$s%")
+            ->orWhere('email', 'like', "%$s%");
+    }
 }

@@ -37,6 +37,6 @@ class Room extends Model
 
     public function scopeSearch($query, $s)
     {
-        $query->where(fn($q) => $q->where('code', 'like', "%$s%")->orWhere('name', 'like', "%$s%"));
+        $query->where('name', 'like', "%$s%");
     }
 }
