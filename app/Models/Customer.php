@@ -24,6 +24,11 @@ class Customer extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    public function checkouts()
+    {
+        return $this->hasMany(Checkout::class);
+    }
+
     public function scopeFilter($query, array $filters)
     {
         //todo filter

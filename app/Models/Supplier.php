@@ -24,6 +24,11 @@ class Supplier extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    public function checkins()
+    {
+        return $this->hasMany(Checkin::class);
+    }
+
     public function scopeFilter($query, array $filters)
     {
         //todo filter

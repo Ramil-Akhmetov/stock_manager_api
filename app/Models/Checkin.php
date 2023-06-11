@@ -15,6 +15,8 @@ class Checkin extends Model
 
     protected $hidden = ['deleted_at'];
 
+    protected $with = ['supplier'];
+
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
     ];
@@ -22,6 +24,11 @@ class Checkin extends Model
     public function scopeWithExtraAttributes()
     {
         return $this->extra_attributes->modelScope();
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
     }
 
 //    public function items()

@@ -15,6 +15,8 @@ class Checkout extends Model
 
     protected $hidden = ['deleted_at'];
 
+    protected $with = ['customer'];
+
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
     ];
@@ -22,6 +24,11 @@ class Checkout extends Model
     public function scopeWithExtraAttributes()
     {
         return $this->extra_attributes->modelScope();
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 
 //    public function items()
