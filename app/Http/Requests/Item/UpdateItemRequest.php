@@ -22,9 +22,9 @@ class UpdateItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'code' => 'required|unique:items,code,'. $this->user()->id,
-            'quantity' => 'required',
+            'name' => 'sometimes',
+            'code' => 'sometimes|unique:items,code,'. $this->user()->id,
+            'quantity' => 'sometimes',
             'unit' => 'nullable',
             'photo' => 'nullable|image',
             'extra_attributes' => 'sometimes',

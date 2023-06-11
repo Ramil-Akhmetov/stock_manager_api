@@ -22,7 +22,7 @@ class UpdateConfirmationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_id' => 'required|exists:items,id',
+            'item_id' => 'sometimes|exists:items,id',
             'quantity' => 'numeric',
         ];
     }

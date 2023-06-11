@@ -22,8 +22,8 @@ class UpdateRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'number' => 'required|integer',
+            'name' => 'sometimes|string',
+            'number' => 'sometimes|integer',
             'user_id' => 'sometimes|integer|exists:users,id',
         ];
     }
