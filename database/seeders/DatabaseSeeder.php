@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ItemSeeder::class,
             ConfirmationSeeder::class,
             CustomerSeeder::class,
+            SupplierSeeder::class,
         ]);
     }
 }

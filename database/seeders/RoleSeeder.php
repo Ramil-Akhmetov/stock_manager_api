@@ -56,5 +56,10 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo('customers.read');
         $role->givePermissionTo('customers.update');
         $role->givePermissionTo('customers.delete');
+
+        $role->givePermissionTo('suppliers.create');
+        $role->givePermissionTo('suppliers.read');
+        $role->givePermissionTo('suppliers.update');
+        $role->givePermissionTo('suppliers.delete');
     }
 }
