@@ -15,7 +15,7 @@ class Checkin extends Model
 
     protected $hidden = ['deleted_at'];
 
-    protected $with = ['supplier'];
+    protected $with = ['supplier', 'items'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
@@ -31,10 +31,12 @@ class Checkin extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-//    public function items()
-//    {
-//
-//    }
+    public function items()
+    {
+        return $this->belongsToMany(Item::class)
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
 
 //    public function scopeFilter($query, array $filters)
 //    {

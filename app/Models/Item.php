@@ -41,6 +41,20 @@ class Item extends Model
         return $this->belongsTo(Room::class);
     }
 
+    public function checkins()
+    {
+        return $this->belongsToMany(Checkin::class)
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
+
+    public function checkouts()
+    {
+        return $this->belongsToMany(Checkout::class)
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
+
     public function confirmations()
     {
         return $this->hasMany(Confirmation::class);

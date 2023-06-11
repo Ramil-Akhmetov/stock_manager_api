@@ -24,10 +24,13 @@ class StoreItemRequest extends FormRequest
         return [
             'name' => 'required',
             'code' => 'required|unique:items,code',
-            'quantity' => 'required',
-            'unit' => 'nullable',
+            'quantity' => 'required_with:unit',
+            'unit' => 'required_with:quantity',
             'photo' => 'nullable|image',
-            'extra_attributes' => 'sometimes',
+            'category_id' => 'nullable|exists:categories,id',
+            'type_id' => 'nullable|exists:types,id',
+            'room_id' => 'nullable|exists:rooms,id',
+            'group_id' => 'nullable|exists:groups,id',
         ];
     }
 }

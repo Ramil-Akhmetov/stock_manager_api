@@ -27,7 +27,10 @@ class UpdateItemRequest extends FormRequest
             'quantity' => 'sometimes',
             'unit' => 'nullable',
             'photo' => 'nullable|image',
-            'extra_attributes' => 'sometimes',
+            'category_id' => 'nullable|exists:categories,id',
+            'type_id' => 'nullable|exists:types,id',
+            'room_id' => 'nullable|exists:rooms,id',
+            'group_id' => 'nullable|exists:groups,id',
         ];
     }
 }
