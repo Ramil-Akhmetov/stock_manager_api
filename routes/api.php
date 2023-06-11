@@ -26,4 +26,5 @@ Route::apiResources([
     'confirmations' => \App\Http\Controllers\ConfirmationController::class,
     'customers' => \App\Http\Controllers\CustomerController::class,
     'suppliers' => \App\Http\Controllers\SupplierController::class,
+    'checkins' => \App\Http\Controllers\CheckinController::class,
 ]);
