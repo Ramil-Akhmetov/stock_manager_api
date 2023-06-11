@@ -33,4 +33,13 @@ class StoreItemRequest extends FormRequest
             'group_id' => 'nullable|exists:groups,id',
         ];
     }
+
+    public function validated($key = null, $default = null)
+    {
+        $data = $this->validator->validated();
+        if ($this->has('photo') && $this->photo) {
+            $data['photo'] = $this->photo->store('images', 'public');
+        }
+        return $data;
+    }
 }

@@ -25,7 +25,10 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'patronymic' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'photo' => 'nullable|image',
             'password' => 'required|string|min:6|confirmed',
         ];
     }
@@ -37,6 +40,10 @@ class RegisterRequest extends FormRequest
             $data['password'] = Hash::make($this->input('password'));
         }
         $data['remember_token'] = Str::random(10);
+
+        if ($this->has('photo') && $this->photo) {
+            $data['photo'] = $this->photo->store('images', 'public');
+        }
 
         return $data;
     }
