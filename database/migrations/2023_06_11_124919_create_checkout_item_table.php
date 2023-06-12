@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Checkout;
+use App\Models\Customer;
 use App\Models\Item;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('checkout_item', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Customer::class);
             $table->foreignIdFor(Checkout::class);
             $table->foreignIdFor(Item::class);
             $table->unsignedFloat('quantity')->nullable();

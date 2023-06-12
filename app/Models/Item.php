@@ -44,14 +44,22 @@ class Item extends Model
     public function checkins()
     {
         return $this->belongsToMany(Checkin::class)
-            ->withPivot('quantity')
+            ->withPivot([
+                'supplier_id',
+                'room_id',
+                'quantity',
+            ])
             ->withTimestamps();
     }
 
     public function checkouts()
     {
         return $this->belongsToMany(Checkout::class)
-            ->withPivot('quantity')
+            ->withPivot([
+                'customer_id',
+                'room_id',
+//                'quantity',
+            ])
             ->withTimestamps();
     }
 

@@ -37,6 +37,7 @@ class CheckinController extends Controller
      */
     public function store(StoreCheckinRequest $request)
     {
+        //todo update for pivot table
         $validated = $request->validated();
         $validated += [
             'user_id' => $request->user()->id,

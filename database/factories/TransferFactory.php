@@ -19,10 +19,7 @@ class TransferFactory extends Factory
     public function definition(): array
     {
         return [
-            'reason' => fake()->text(),
             'user_id' => User::all()->random()->id,
-            'from_room_id' => Room::all()->random()->id,
-            'to_room_id' => Room::all()->random()->id,
         ];
     }
 }

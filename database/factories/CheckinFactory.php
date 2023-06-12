@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +19,6 @@ class CheckinFactory extends Factory
     {
         return [
             'user_id' => User::all()->random()->id,
-            'supplier_id' => Supplier::all()->random()->id,
         ];
     }
 }

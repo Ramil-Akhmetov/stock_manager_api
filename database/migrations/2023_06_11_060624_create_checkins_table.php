@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,7 +14,6 @@ return new class extends Migration
     {
         Schema::create('checkins', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Supplier::class);
             $table->foreignIdFor(User::class);
             $table->schemalessAttributes('extra_attributes');
             $table->timestamps();

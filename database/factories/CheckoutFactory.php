@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +19,6 @@ class CheckoutFactory extends Factory
     {
         return [
             'user_id' => User::all()->random()->id,
-            'customer_id' => Customer::all()->random()->id,
         ];
     }
 }

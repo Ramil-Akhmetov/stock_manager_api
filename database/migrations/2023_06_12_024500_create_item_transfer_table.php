@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Item;
+use App\Models\Room;
 use App\Models\Transfer;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,8 +16,11 @@ return new class extends Migration
     {
         Schema::create('item_transfer', function (Blueprint $table) {
             $table->id();
+            $table->string('reason')->nullable();
             $table->foreignIdFor(Transfer::class);
             $table->foreignIdFor(Item::class);
+            $table->foreignIdFor(Room::class, 'from_room_id');
+            $table->foreignIdFor(Room::class, 'to_room_id');
             $table->unsignedFloat('quantity')->nullable();
             $table->timestamps();
         });
