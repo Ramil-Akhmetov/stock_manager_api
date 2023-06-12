@@ -70,5 +70,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'checkouts.read']);
         Permission::create(['name' => 'checkouts.update']);
         Permission::create(['name' => 'checkouts.delete']);
+
+        Permission::create(['name' => 'transfers.create']);
+        Permission::create(['name' => 'transfers.read']);
+        Permission::create(['name' => 'transfers.update']);
+        Permission::create(['name' => 'transfers.delete']);
     }
 }

@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             SupplierSeeder::class,
             CheckinSeeder::class,
             CheckoutSeeder::class,
+            TransferSeeder::class,
         ]);
     }
 }

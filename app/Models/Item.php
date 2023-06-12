@@ -55,6 +55,13 @@ class Item extends Model
             ->withTimestamps();
     }
 
+    public function transfers()
+    {
+        return $this->belongsToMany(Transfer::class)
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
+
     public function confirmations()
     {
         return $this->hasMany(Confirmation::class);

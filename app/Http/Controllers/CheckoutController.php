@@ -49,7 +49,6 @@ class CheckoutController extends Controller
             $item = Item::find($item_id);
             $checkout->items()->attach($item->id);
         }
-        $checkout = checkout::create($validated);
         return new CheckoutResource($checkout);
     }
 
