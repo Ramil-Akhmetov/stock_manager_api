@@ -43,6 +43,7 @@ class TransferController extends Controller
         ];
         //todo add transaction
         //todo maybe should add quantity for each item
+        //todo maybe from_room_id and to_room_id should be in pivot table
         $transfer = Transfer::create($validated);
         foreach ($validated['item_ids'] as $item_id) {
             $item = Item::find($item_id);
