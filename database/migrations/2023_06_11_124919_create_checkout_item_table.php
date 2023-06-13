@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Checkout;
-use App\Models\Customer;
 use App\Models\Item;
 use App\Models\Room;
 use Illuminate\Database\Migrations\Migration;
@@ -17,7 +16,6 @@ return new class extends Migration
     {
         Schema::create('checkout_item', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Customer::class);
             $table->foreignIdFor(Checkout::class);
             $table->foreignIdFor(Item::class);
             $table->foreignIdFor(Room::class);

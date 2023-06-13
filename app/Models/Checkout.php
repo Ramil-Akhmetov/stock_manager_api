@@ -11,7 +11,7 @@ class Checkout extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'extra_attributes'];
+    protected $fillable = ['note', 'user_id', 'customer_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
@@ -30,7 +30,6 @@ class Checkout extends Model
     {
         return $this->belongsToMany(Item::class)
             ->withPivot([
-                'customer_id',
                 'room_id',
 //                'quantity',
             ])

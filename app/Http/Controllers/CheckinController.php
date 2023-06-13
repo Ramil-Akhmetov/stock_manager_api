@@ -46,7 +46,10 @@ class CheckinController extends Controller
         $checkin = Checkin::create($validated);
         foreach ($validated['items'] as $item) {
             $new_item = Item::create($item);
-            $checkin->items()->attach($new_item->id, ['quantity' => $new_item->quantity]);
+            $checkin->items()->attach($new_item->id, [
+                'quantity' => $new_item->quantity,
+                'room_id' => $new_item->room_id,
+            ]);
         }
         return new CheckinResource($checkin);
     }

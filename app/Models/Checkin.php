@@ -11,7 +11,7 @@ class Checkin extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'extra_attributes'];
+    protected $fillable = ['note', 'user_id', 'supplier_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
@@ -26,11 +26,15 @@ class Checkin extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
     public function items()
     {
         return $this->belongsToMany(Item::class)
             ->withPivot([
-                'supplier_id',
                 'room_id',
                 'quantity',
             ])

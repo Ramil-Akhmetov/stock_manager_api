@@ -22,9 +22,10 @@ class StoreCheckinRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'note' => 'nullable|string',
             'supplier_id' => 'required|integer|exists:suppliers,id',
-            'items' => 'required|array|min:1',
 
+            'items' => 'required|array|min:1',
             'items.*.name' => 'required',
             'items.*.code' => 'required|unique:items,code',
             'items.*.quantity' => 'required_with:items.*.unit',

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Checkout;
-use App\Models\Customer;
 use App\Models\Item;
 use App\Models\Room;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -23,7 +22,6 @@ class CheckoutSeeder extends Seeder
         foreach ($checkins as $checkin) {
             $items = Item::factory(5)->create();
             $checkin->items()->attach($items, [
-                'customer_id' => Customer::all()->random()->id,
                 'room_id' => Room::all()->random()->id,
                 'quantity' => $faker->numberBetween(1, 10),
             ]);

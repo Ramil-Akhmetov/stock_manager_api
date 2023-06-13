@@ -23,9 +23,10 @@ class UpdateCheckinRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'note' => 'nullable|string',
             'supplier_id' => 'sometimes|integer|exists:suppliers,id',
-            'items' => 'sometimes|array|min:1',
 
+            'items' => 'sometimes|array|min:1',
             'items.*.name' => 'sometimes',
             'items.*.code' => 'sometimes|unique:items,code',
             'items.*.quantity' => 'sometimes',

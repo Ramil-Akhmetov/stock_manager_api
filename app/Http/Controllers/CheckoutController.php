@@ -28,7 +28,7 @@ class CheckoutController extends Controller
     public function index(Request $request)
     {
 //        $filters = $request->all('search');
-        $checkouts = checkout::paginate();
+        $checkouts = Checkout::paginate();
         return new CheckoutCollection($checkouts);
     }
 
@@ -49,7 +49,6 @@ class CheckoutController extends Controller
         foreach ($validated['item_ids'] as $item_id) {
             $item = Item::find($item_id);
             $checkout->items()->attach($item->id, [
-                'customer_id' => $validated['customer_id'],
                 'room_id' => $item->room_id,
             ]);
         }
