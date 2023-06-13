@@ -48,7 +48,10 @@ class CheckoutController extends Controller
         $checkout = Checkout::create($validated);
         foreach ($validated['item_ids'] as $item_id) {
             $item = Item::find($item_id);
-            $checkout->items()->attach($item->id);
+            $checkout->items()->attach($item->id, [
+                'customer_id' => $validated['customer_id'],
+                'room_id' => $item->room_id,
+            ]);
         }
         return new CheckoutResource($checkout);
     }
