@@ -15,7 +15,7 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         $data = parent::toArray($request);
-        if($data['photo']){
+        if (isset($data['photo'])) {
             $data['photo'] = url('/') . '/storage/' . $data['photo'];
         }
         return $data;

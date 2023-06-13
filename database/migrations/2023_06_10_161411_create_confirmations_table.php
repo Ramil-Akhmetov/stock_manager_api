@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('confirmations', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Item::class);
-            $table->unsignedFloat('quantity');
+            $table->unsignedFloat('quantity')->nullable();
             $table->foreignIdFor(User::class);
             $table->schemalessAttributes('extra_attributes');
             $table->timestamps();

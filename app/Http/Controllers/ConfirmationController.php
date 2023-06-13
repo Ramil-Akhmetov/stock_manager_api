@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ConfirmationEvent;
 use App\Http\Requests\Confirmaiton\StoreConfirmationRequest;
 use App\Http\Requests\Confirmaiton\UpdateConfirmationRequest;
 use App\Http\Resources\Confirmation\ConfirmationCollection;
@@ -36,12 +37,12 @@ class ConfirmationController extends Controller
      */
     public function store(StoreConfirmationRequest $request)
     {
-        //todo update item info event
         $validated = $request->validated();
         $validated += [
             'user_id' => $request->user()->id,
         ];
         $confirmation = Confirmation::create($validated);
+        ConfirmationEvent::dispatch($confirmation, 'store');
         return new ConfirmationResource($confirmation);
     }
 
@@ -58,8 +59,8 @@ class ConfirmationController extends Controller
      */
     public function update(UpdateConfirmationRequest $request, Confirmation $confirmation)
     {
-        //todo update item info event
         $confirmation->update($request->validated());
+        ConfirmationEvent::dispatch($confirmation, 'store');
         return new ConfirmationResource($confirmation);
     }
 
