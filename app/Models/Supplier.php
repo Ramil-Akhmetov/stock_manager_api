@@ -31,8 +31,9 @@ class Supplier extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        //todo filter
-        $query->when($filters['search'] ?? null, fn($query, $search) => $query->search($search));
+        if ($filters['search']) {
+            $query->search($filters['search']);
+        }
     }
 
     public function scopeSearch($query, $s)
