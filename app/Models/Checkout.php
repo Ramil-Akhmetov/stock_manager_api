@@ -15,7 +15,7 @@ class Checkout extends Model
 
     protected $hidden = ['deleted_at'];
 
-    protected $with = ['customer'];
+    protected $with = ['items'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
@@ -26,17 +26,12 @@ class Checkout extends Model
         return $this->extra_attributes->modelScope();
     }
 
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }
-
     public function items()
     {
         return $this->belongsToMany(Item::class)
             ->withPivot([
                 'customer_id',
-                'room_id',
+//                'room_id',
 //                'quantity',
             ])
             ->withTimestamps();
