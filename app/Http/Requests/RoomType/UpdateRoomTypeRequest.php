@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Room;
+namespace App\Http\Requests\RoomType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRoomRequest extends FormRequest
+class UpdateRoomTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,7 @@ class StoreRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'number' => 'required|integer',
-            'user_id' => 'sometimes|integer|exists:users,id',
-            'room_type_id' => 'required|integer|exists:room_types,id',
+            'name' => 'sometimes|string',
         ];
     }
 }

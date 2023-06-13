@@ -25,6 +25,7 @@ class UpdateRoomRequest extends FormRequest
             'name' => 'sometimes|string',
             'number' => 'sometimes|integer',
             'user_id' => 'sometimes|integer|exists:users,id',
+            'room_type_id' => 'required|integer|exists:room_types,id',
         ];
     }
 }

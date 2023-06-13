@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             TypeSeeder::class,
             GroupSeeder::class,
+            RoomTypeSeeder::class,
             RoomSeeder::class,
             ItemSeeder::class,
             ConfirmationSeeder::class,

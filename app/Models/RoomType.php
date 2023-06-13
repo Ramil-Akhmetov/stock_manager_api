@@ -7,15 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
-class Room extends Model
+class RoomType extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'number', 'user_id', 'room_type_id', 'extra_attributes'];
+    protected $fillable = ['name', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
-
-    protected $with = ['room_type'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
@@ -26,14 +24,9 @@ class Room extends Model
         return $this->extra_attributes->modelScope();
     }
 
-    public function items()
+    public function rooms()
     {
-        return $this->hasMany(Item::class);
-    }
-
-    public function room_type()
-    {
-        return $this->belongsTo(RoomType::class);
+        return $this->hasMany(Room::class);
     }
 
     public function scopeFilter($query, array $filters)

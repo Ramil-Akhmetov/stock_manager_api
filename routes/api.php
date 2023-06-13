@@ -22,6 +22,7 @@ Route::apiResources([
     'items' => \App\Http\Controllers\ItemController::class,
     'types' => \App\Http\Controllers\TypeController::class,
     'groups' => \App\Http\Controllers\GroupController::class,
+    'room_types' => \App\Http\Controllers\RoomTypeController::class,
     'rooms' => \App\Http\Controllers\RoomController::class,
     'confirmations' => \App\Http\Controllers\ConfirmationController::class,
     'customers' => \App\Http\Controllers\CustomerController::class,

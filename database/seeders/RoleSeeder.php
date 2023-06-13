@@ -42,6 +42,11 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo('groups.update');
         $role->givePermissionTo('groups.delete');
 
+        $role->givePermissionTo('room_types.create');
+        $role->givePermissionTo('room_types.read');
+        $role->givePermissionTo('room_types.update');
+        $role->givePermissionTo('room_types.delete');
+
         $role->givePermissionTo('rooms.create');
         $role->givePermissionTo('rooms.read');
         $role->givePermissionTo('rooms.update');
