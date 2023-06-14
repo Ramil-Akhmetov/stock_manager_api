@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('note');
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Room::class); //from_room_id
             $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
             $table->softDeletes();

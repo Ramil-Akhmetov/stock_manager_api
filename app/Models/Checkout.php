@@ -31,7 +31,7 @@ class Checkout extends Model
         return $this->belongsToMany(Item::class)
             ->withPivot([
                 'room_id',
-//                'quantity',
+                'quantity',
             ])
             ->withTimestamps();
     }

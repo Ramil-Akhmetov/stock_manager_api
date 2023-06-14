@@ -9,6 +9,7 @@ use App\Http\Resources\Transfer\TransferResource;
 use App\Models\Item;
 use App\Models\Transfer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransferController extends Controller
 {
@@ -37,19 +38,26 @@ class TransferController extends Controller
      */
     public function store(StoreTransferRequest $request)
     {
-        //todo update for pivot table
         $validated = $request->validated();
         $validated += [
             'user_id' => $request->user()->id,
         ];
-        //todo add transaction
-        //todo maybe should add quantity for each item
-        //todo maybe from_room_id and to_room_id should be in pivot table
-        $transfer = Transfer::create($validated);
-        foreach ($validated['item_ids'] as $item_id) {
-            $item = Item::find($item_id);
-            $transfer->items()->attach($item->id);
-        }
+
+        //todo maybe should use event
+        $transfer = DB::transaction(function () use ($validated) {
+            $transfer = Transfer::create($validated);
+
+            foreach ($validated['items'] as $item) {
+                $transfer->items()->attach($item['id'], [
+                    'room_id' => $item['room_id'],
+                    'quantity' => $item['quantity'],
+                ]);
+                $db_item = Item::find($item['id']);
+                $db_item->room_id = $item['room_id'];
+                $db_item->save();
+            }
+            return $transfer;
+        });
         return new TransferResource($transfer);
     }
 

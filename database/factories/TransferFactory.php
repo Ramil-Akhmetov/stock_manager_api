@@ -20,6 +20,7 @@ class TransferFactory extends Factory
     {
         return [
             'note' => fake()->text(),
+            'room_id' => Room::all()->random()->id,
             'user_id' => User::all()->random()->id,
         ];
     }

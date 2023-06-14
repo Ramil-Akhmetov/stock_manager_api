@@ -22,8 +22,7 @@ class TransferSeeder extends Seeder
         foreach ($checkins as $checkin) {
             $items = Item::factory(5)->create();
             $checkin->items()->attach($items, [
-                'from_room_id' => Room::all()->random()->id,
-                'to_room_id' => Room::all()->random()->id,
+                'room_id' => Room::all()->random()->id,
                 'quantity' => $faker->numberBetween(1, 10),
             ]);
         }

@@ -22,11 +22,13 @@ class StoreTransferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'reason' => 'nullable|string',
-            'from_room_id' => 'required|integer|exists:rooms,id',
-            'to_room_id' => 'required|integer|exists:rooms,id',
-            'item_ids' => 'required|array|min:1',
-            'item_ids.*' => 'integer|exists:items,id',
+            'note' => 'nullable|string',
+            'room_id' => 'required|integer|exists:rooms,id',
+
+            'items' => 'required|array|min:1',
+            'items.*.id' => 'required|integer|exists:items,id',
+            'items.*.room_id' => 'required|integer|exists:rooms,id',
+            'items.*.quantity' => 'nullable|numeric',
         ];
     }
 }

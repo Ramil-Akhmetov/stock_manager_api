@@ -11,7 +11,7 @@ class Transfer extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['reason', 'user_id', 'from_room_id', 'to_room_id', 'extra_attributes'];
+    protected $fillable = ['note', 'user_id', 'room_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
@@ -34,7 +34,10 @@ class Transfer extends Model
     public function items()
     {
         return $this->belongsToMany(Item::class)
-            ->withPivot('quantity')
+            ->withPivot([
+                'room_id',
+                'quantity',
+            ])
             ->withTimestamps();
     }
 

@@ -9,6 +9,7 @@ use App\Http\Resources\Checkin\CheckinResource;
 use App\Models\Checkin;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CheckinController extends Controller
 {
@@ -37,20 +38,24 @@ class CheckinController extends Controller
      */
     public function store(StoreCheckinRequest $request)
     {
-        //todo update for pivot table
         $validated = $request->validated();
         $validated += [
             'user_id' => $request->user()->id,
         ];
-        //todo add transaction
-        $checkin = Checkin::create($validated);
-        foreach ($validated['items'] as $item) {
-            $new_item = Item::create($item);
-            $checkin->items()->attach($new_item->id, [
-                'quantity' => $new_item->quantity,
-                'room_id' => $new_item->room_id,
-            ]);
-        }
+
+        //todo maybe should use event
+        $checkin = DB::transaction(function () use ($validated) {
+            $checkin = Checkin::create($validated);
+
+            foreach ($validated['items'] as $item) {
+                $new_item = Item::create($item);
+                $checkin->items()->attach($new_item->id, [
+                    'quantity' => $new_item->quantity,
+                    'room_id' => $new_item->room_id,
+                ]);
+            }
+            return $checkin;
+        });
         return new CheckinResource($checkin);
     }
 

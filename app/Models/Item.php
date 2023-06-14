@@ -56,7 +56,7 @@ class Item extends Model
         return $this->belongsToMany(Checkout::class)
             ->withPivot([
                 'room_id',
-//                'quantity',
+                'quantity',
             ])
             ->withTimestamps();
     }
@@ -64,7 +64,10 @@ class Item extends Model
     public function transfers()
     {
         return $this->belongsToMany(Transfer::class)
-            ->withPivot('quantity')
+            ->withPivot([
+                'room_id',
+                'quantity',
+            ])
             ->withTimestamps();
     }
 
