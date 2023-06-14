@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Checkin\StoreCheckinRequest;
 use App\Http\Requests\Checkin\UpdateCheckinRequest;
-use App\Http\Resources\Confirmation\CheckinCollection;
-use App\Http\Resources\Confirmation\CheckinResource;
+use App\Http\Resources\Checkin\CheckinCollection;
+use App\Http\Resources\Checkin\CheckinResource;
 use App\Models\Checkin;
 use App\Models\Item;
 use Illuminate\Http\Request;

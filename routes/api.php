@@ -30,4 +30,5 @@ Route::apiResources([
     'checkins' => \App\Http\Controllers\CheckinController::class,
     'checkouts' => \App\Http\Controllers\CheckoutController::class,
     'transfers' => \App\Http\Controllers\TransferController::class,
+    'roles' => \App\Http\Controllers\RoleController::class,
 ]);

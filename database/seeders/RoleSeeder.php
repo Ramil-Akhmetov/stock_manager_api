@@ -81,5 +81,10 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo('transfers.read');
         $role->givePermissionTo('transfers.update');
         $role->givePermissionTo('transfers.delete');
+
+        $role->givePermissionTo('roles.create');
+        $role->givePermissionTo('roles.read');
+        $role->givePermissionTo('roles.update');
+        $role->givePermissionTo('roles.delete');
     }
 }
