@@ -27,6 +27,11 @@ class User extends Authenticatable
 
     protected $with = ['roles:id,name'];
 
+    public function responsibilities()
+    {
+        return $this->hasMany(Responsibility::class);
+    }
+
     public function scopeWithExtraAttributes()
     {
         return $this->extra_attributes->modelScope();

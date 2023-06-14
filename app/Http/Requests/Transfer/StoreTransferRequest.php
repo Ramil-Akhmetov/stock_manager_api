@@ -21,6 +21,7 @@ class StoreTransferRequest extends FormRequest
      */
     public function rules(): array
     {
+        //todo item.room_id (from room) should be equal, validate it
         return [
             'note' => 'nullable|string',
             'room_id' => 'required|integer|exists:rooms,id',

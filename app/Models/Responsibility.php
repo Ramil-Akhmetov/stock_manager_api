@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
-class Confirmation extends Model
+class Responsibility extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['item_id', 'quantity', 'user_id', 'extra_attributes'];
+    protected $fillable = ['start_date', 'end_date', 'user_id', 'room_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
@@ -22,8 +22,13 @@ class Confirmation extends Model
         return $this->extra_attributes->modelScope();
     }
 
-    public function item()
+    public function user()
     {
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
     }
 }
