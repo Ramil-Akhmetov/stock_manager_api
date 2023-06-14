@@ -32,3 +32,7 @@ Route::apiResources([
     'transfers' => \App\Http\Controllers\TransferController::class,
     'roles' => \App\Http\Controllers\RoleController::class,
 ]);
+
+Route::apiResource(
+    'permissions', \App\Http\Controllers\PermissionController::class
+)->only(['index', 'show']);
