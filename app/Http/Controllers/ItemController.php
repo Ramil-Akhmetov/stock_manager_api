@@ -9,6 +9,7 @@ use App\Http\Resources\Item\ItemCollection;
 use App\Http\Resources\Item\ItemResource;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -37,8 +38,13 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $request)
     {
-        $item = Item::create($request->validated());
-        ItemEvent::dispatch($item);
+        //todo debug this
+        $validated = $request->validated();
+        $item = DB::transaction(function () use ($validated) {
+            $item = Item::create($validated);
+            ItemEvent::dispatch($item);
+            return $item;
+        });
         return new ItemResource($item);
     }
 
@@ -55,8 +61,13 @@ class ItemController extends Controller
      */
     public function update(UpdateItemRequest $request, Item $item)
     {
-        $item->update($request->validated());
-        ItemEvent::dispatch($item);
+        //todo debug this
+        $validated = $request->validated();
+        $item = DB::transaction(function () use ($item, $validated) {
+            $item->update($validated);
+            ItemEvent::dispatch($item);
+            return $item;
+        });
         return new ItemResource($item);
     }
 

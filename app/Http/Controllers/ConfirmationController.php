@@ -10,6 +10,7 @@ use App\Http\Resources\Confirmation\ConfirmationResource;
 use App\Models\Confirmation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ConfirmationController extends Controller
 {
@@ -41,8 +42,11 @@ class ConfirmationController extends Controller
         $validated += [
             'user_id' => $request->user()->id,
         ];
-        $confirmation = Confirmation::create($validated);
-        ConfirmationEvent::dispatch($confirmation, 'store');
+        //todo debug this
+        $confirmation = DB::transaction(function () use ($validated) {
+            $confirmation = Confirmation::create($validated);
+            ConfirmationEvent::dispatch($confirmation, 'store');
+        });
         return new ConfirmationResource($confirmation);
     }
 
@@ -59,8 +63,12 @@ class ConfirmationController extends Controller
      */
     public function update(UpdateConfirmationRequest $request, Confirmation $confirmation)
     {
-        $confirmation->update($request->validated());
-        ConfirmationEvent::dispatch($confirmation, 'store');
+        //todo debug this
+        $validated = $request->validated();
+        $confirmation = DB::transaction(function () use ($confirmation, $validated) {
+            $confirmation->update($validated);
+            ConfirmationEvent::dispatch($confirmation, 'store');
+        });
         return new ConfirmationResource($confirmation);
     }
 
