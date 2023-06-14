@@ -10,6 +10,8 @@ use App\Events\ConfirmationEvent;
 use App\Listeners\UpdateItemListener;
 use App\Events\ItemEvent;
 use App\Listeners\UpdateConfirmationListener;
+use App\Events\RoomEvent;
+use App\Listeners\UpdateResponsibilityListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         ItemEvent::class => [
             UpdateConfirmationListener::class,
+        ],
+
+        RoomEvent::class => [
+            UpdateResponsibilityListener::class,
         ],
     ];
 

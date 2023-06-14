@@ -23,7 +23,6 @@ class UpdateConfirmationListener
      */
     public function handle(ItemEvent $event): void
     {
-        Log::debug('test');
         Confirmation::create([
             'item_id' => $event->item->id,
             'quantity' => $event->item->quantity,
