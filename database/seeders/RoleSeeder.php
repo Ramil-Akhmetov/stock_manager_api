@@ -42,6 +42,11 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo('groups.update');
         $role->givePermissionTo('groups.delete');
 
+        $role->givePermissionTo('room_types.create');
+        $role->givePermissionTo('room_types.read');
+        $role->givePermissionTo('room_types.update');
+        $role->givePermissionTo('room_types.delete');
+
         $role->givePermissionTo('rooms.create');
         $role->givePermissionTo('rooms.read');
         $role->givePermissionTo('rooms.update');
@@ -71,5 +76,22 @@ class RoleSeeder extends Seeder
         $role->givePermissionTo('checkouts.read');
         $role->givePermissionTo('checkouts.update');
         $role->givePermissionTo('checkouts.delete');
+
+        $role->givePermissionTo('transfers.create');
+        $role->givePermissionTo('transfers.read');
+        $role->givePermissionTo('transfers.update');
+        $role->givePermissionTo('transfers.delete');
+
+        $role->givePermissionTo('permissions.read');
+
+        $role->givePermissionTo('roles.create');
+        $role->givePermissionTo('roles.read');
+        $role->givePermissionTo('roles.update');
+        $role->givePermissionTo('roles.delete');
+
+        $role->givePermissionTo('responsibilities.create');
+        $role->givePermissionTo('responsibilities.read');
+        $role->givePermissionTo('responsibilities.update');
+        $role->givePermissionTo('responsibilities.delete');
     }
 }

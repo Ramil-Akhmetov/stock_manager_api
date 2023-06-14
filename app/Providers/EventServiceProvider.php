@@ -6,6 +6,12 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use App\Events\ConfirmationEvent;
+use App\Listeners\UpdateItemListener;
+use App\Events\ItemEvent;
+use App\Listeners\UpdateConfirmationListener;
+use App\Events\RoomEvent;
+use App\Listeners\UpdateResponsibilityListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -17,6 +23,17 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+
+        ConfirmationEvent::class => [
+            UpdateItemListener::class,
+        ],
+        ItemEvent::class => [
+            UpdateConfirmationListener::class,
+        ],
+
+        RoomEvent::class => [
+            UpdateResponsibilityListener::class,
         ],
     ];
 

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('checkouts', function (Blueprint $table) {
             $table->id();
+            $table->text('note')->nullable();
             $table->foreignIdFor(Customer::class);
             $table->foreignIdFor(User::class);
             $table->schemalessAttributes('extra_attributes');

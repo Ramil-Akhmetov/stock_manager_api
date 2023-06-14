@@ -7,7 +7,9 @@ use App\Http\Requests\Checkout\UpdateCheckoutRequest;
 use App\Http\Resources\Checkout\CheckoutCollection;
 use App\Http\Resources\Checkout\CheckoutResource;
 use App\Models\Checkout;
+use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
@@ -27,7 +29,7 @@ class CheckoutController extends Controller
     public function index(Request $request)
     {
 //        $filters = $request->all('search');
-        $checkouts = checkout::paginate();
+        $checkouts = Checkout::paginate();
         return new CheckoutCollection($checkouts);
     }
 
@@ -40,7 +42,20 @@ class CheckoutController extends Controller
         $validated += [
             'user_id' => $request->user()->id,
         ];
-        $checkout = checkout::create($validated);
+
+        //todo maybe should use event
+        $checkout = DB::transaction(function () use ($validated) {
+            $checkout = Checkout::create($validated);
+
+            foreach ($validated['item_ids'] as $item_id) {
+                $item = Item::find($item_id);
+                $checkout->items()->attach($item->id, [
+                    'room_id' => $item->room_id,
+                    'quantity' => $item->quantity,
+                ]);
+            }
+            return $checkout;
+        });
         return new CheckoutResource($checkout);
     }
 
@@ -57,6 +72,7 @@ class CheckoutController extends Controller
      */
     public function update(UpdatecheckoutRequest $request, Checkout $checkout)
     {
+        //todo add update
         $checkout->update($request->validated());
         return new CheckoutResource($checkout);
     }

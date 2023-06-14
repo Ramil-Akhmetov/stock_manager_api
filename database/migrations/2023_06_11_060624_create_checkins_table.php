@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('checkins', function (Blueprint $table) {
             $table->id();
+            $table->text('note')->nullable();
             $table->foreignIdFor(Supplier::class);
             $table->foreignIdFor(User::class);
             $table->schemalessAttributes('extra_attributes');

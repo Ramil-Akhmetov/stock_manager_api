@@ -22,7 +22,11 @@ class StoreCheckoutRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'note' => 'nullable|string',
             'customer_id' => 'required|integer|exists:customers,id',
+
+            'item_ids' => 'required|array|min:1',
+            'item_ids.*' => 'integer|exists:items,id',
         ];
     }
 }

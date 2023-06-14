@@ -15,7 +15,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
-    protected $fillable = ['name', 'surname', 'patronymic', 'email', 'password'];
+    protected $fillable = ['name', 'surname', 'patronymic', 'email', 'password', 'photo'];
 
     protected $hidden = ['password', 'remember_token', 'email_verified_at', 'deleted_at'];
 
@@ -27,6 +27,11 @@ class User extends Authenticatable
 
     protected $with = ['roles:id,name'];
 
+    public function responsibilities()
+    {
+        return $this->hasMany(Responsibility::class);
+    }
+
     public function scopeWithExtraAttributes()
     {
         return $this->extra_attributes->modelScope();
@@ -34,8 +39,9 @@ class User extends Authenticatable
 
     public function scopeFilter($query, array $filters)
     {
-        //todo filter
-        $query->when($filters['search'] ?? null, fn($query, $search) => $query->search($search));
+        if ($filters['search']) {
+            $query->search($filters['search']);
+        }
     }
 
     public function scopeSearch($query, $s)

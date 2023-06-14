@@ -41,6 +41,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'groups.update']);
         Permission::create(['name' => 'groups.delete']);
 
+        Permission::create(['name' => 'room_types.create']);
+        Permission::create(['name' => 'room_types.read']);
+        Permission::create(['name' => 'room_types.update']);
+        Permission::create(['name' => 'room_types.delete']);
+
         Permission::create(['name' => 'rooms.create']);
         Permission::create(['name' => 'rooms.read']);
         Permission::create(['name' => 'rooms.update']);
@@ -70,5 +75,22 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'checkouts.read']);
         Permission::create(['name' => 'checkouts.update']);
         Permission::create(['name' => 'checkouts.delete']);
+
+        Permission::create(['name' => 'transfers.create']);
+        Permission::create(['name' => 'transfers.read']);
+        Permission::create(['name' => 'transfers.update']);
+        Permission::create(['name' => 'transfers.delete']);
+
+        Permission::create(['name' => 'permissions.read']);
+
+        Permission::create(['name' => 'roles.create']);
+        Permission::create(['name' => 'roles.read']);
+        Permission::create(['name' => 'roles.update']);
+        Permission::create(['name' => 'roles.delete']);
+
+        Permission::create(['name' => 'responsibilities.create']);
+        Permission::create(['name' => 'responsibilities.read']);
+        Permission::create(['name' => 'responsibilities.update']);
+        Permission::create(['name' => 'responsibilities.delete']);
     }
 }

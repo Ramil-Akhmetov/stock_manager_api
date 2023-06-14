@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ItemEvent;
 use App\Http\Requests\Item\StoreItemRequest;
 use App\Http\Requests\Item\UpdateItemRequest;
 use App\Http\Resources\Item\ItemCollection;
 use App\Http\Resources\Item\ItemResource;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -26,8 +28,8 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-//        $filters = $request->all('search');
-        $items = Item::paginate();
+        $filters = $request->all('search');
+        $items = Item::filter($filters)->paginate();
         return new ItemCollection($items);
     }
 
@@ -36,8 +38,13 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $request)
     {
-        //todo add confirmation event
-        $item = Item::create($request->validated());
+        //todo debug this
+        $validated = $request->validated();
+        $item = DB::transaction(function () use ($validated) {
+            $item = Item::create($validated);
+            ItemEvent::dispatch($item);
+            return $item;
+        });
         return new ItemResource($item);
     }
 
@@ -54,8 +61,13 @@ class ItemController extends Controller
      */
     public function update(UpdateItemRequest $request, Item $item)
     {
-        //todo add confirmation event
-        $item->update($request->validated());
+        //todo debug this
+        $validated = $request->validated();
+        $item = DB::transaction(function () use ($item, $validated) {
+            $item->update($validated);
+            ItemEvent::dispatch($item);
+            return $item;
+        });
         return new ItemResource($item);
     }
 

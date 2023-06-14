@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignIdFor(Category::class)->nullable();
             $table->foreignIdFor(Type::class)->nullable();
             $table->foreignIdFor(Group::class)->nullable();
-            $table->foreignIdFor(Room::class)->nullable();
+            $table->foreignIdFor(Room::class);
             $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
             $table->softDeletes();

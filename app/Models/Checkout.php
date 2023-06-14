@@ -11,11 +11,11 @@ class Checkout extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['customer_id', 'user_id', 'extra_attributes'];
+    protected $fillable = ['note', 'user_id', 'customer_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
-    protected $with = ['customer'];
+    protected $with = ['items'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
@@ -26,24 +26,25 @@ class Checkout extends Model
         return $this->extra_attributes->modelScope();
     }
 
-    public function customer()
+    public function items()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsToMany(Item::class)
+            ->withPivot([
+                'room_id',
+                'quantity',
+            ])
+            ->withTimestamps();
     }
 
-//    public function items()
-//    {
-//
-//    }
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['search']) {
+            $query->search($filters['search']);
+        }
+    }
 
-//    public function scopeFilter($query, array $filters)
-//    {
-//        //todo filter
-//        $query->when($filters['search'] ?? null, fn($query, $search) => $query->search($search));
-//    }
-//
-//    public function scopeSearch($query, $s)
-//    {
-//        $query->where('name', 'like', "%$s%");
-//    }
+    public function scopeSearch($query, $s)
+    {
+        $query->where('name', 'like', "%$s%");
+    }
 }

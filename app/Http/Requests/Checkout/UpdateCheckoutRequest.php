@@ -22,7 +22,11 @@ class UpdateCheckoutRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'note' => 'nullable|string',
             'customer_id' => 'sometimes|integer|exists:customers,id',
+
+            'item_ids' => 'sometimes|array|min:1',
+            'item_ids.*' => 'integer|exists:items,id',
         ];
     }
 }

@@ -11,7 +11,7 @@ class Item extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['code', 'name', 'quantity', 'unit', 'photo', 'extra_attributes'];
+    protected $fillable = ['code', 'name', 'quantity', 'unit', 'photo', 'category_id', 'type_id', 'group_id', 'room_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
@@ -41,6 +41,36 @@ class Item extends Model
         return $this->belongsTo(Room::class);
     }
 
+    public function checkins()
+    {
+        return $this->belongsToMany(Checkin::class)
+            ->withPivot([
+                'room_id',
+                'quantity',
+            ])
+            ->withTimestamps();
+    }
+
+    public function checkouts()
+    {
+        return $this->belongsToMany(Checkout::class)
+            ->withPivot([
+                'room_id',
+                'quantity',
+            ])
+            ->withTimestamps();
+    }
+
+    public function transfers()
+    {
+        return $this->belongsToMany(Transfer::class)
+            ->withPivot([
+                'room_id',
+                'quantity',
+            ])
+            ->withTimestamps();
+    }
+
     public function confirmations()
     {
         return $this->hasMany(Confirmation::class);
@@ -53,8 +83,9 @@ class Item extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        //todo filter
-        $query->when($filters['search'] ?? null, fn($query, $search) => $query->search($search));
+        if ($filters['search']) {
+            $query->search($filters['search']);
+        }
     }
 
     public function scopeSearch($query, $s)

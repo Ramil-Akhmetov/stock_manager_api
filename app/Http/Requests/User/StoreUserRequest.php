@@ -26,8 +26,11 @@ class StoreUserRequest extends FormRequest
             'phone' => 'required|string',
             'roles' => 'array|min:1',
             'roles.*' => 'string',
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'patronymic' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users,email',
+            'photo' => 'nullable|image',
             'password' => 'required|string|confirmed|min:8',
         ];
     }
@@ -38,6 +41,11 @@ class StoreUserRequest extends FormRequest
         if ($this->input('password')) {
             $data['password'] = Hash::make($this->input('password'));
         }
+
+        if ($this->has('photo') && $this->photo) {
+            $data['photo'] = $this->photo->store('images', 'public');
+        }
+
         return $data;
     }
 }

@@ -11,11 +11,11 @@ class Checkin extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['supplier_id', 'user_id', 'extra_attributes'];
+    protected $fillable = ['note', 'user_id', 'supplier_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
-    protected $with = ['supplier'];
+    protected $with = ['items'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
@@ -31,19 +31,25 @@ class Checkin extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-//    public function items()
-//    {
-//
-//    }
+    public function items()
+    {
+        return $this->belongsToMany(Item::class)
+            ->withPivot([
+                'room_id',
+                'quantity',
+            ])
+            ->withTimestamps();
+    }
 
-//    public function scopeFilter($query, array $filters)
-//    {
-//        //todo filter
-//        $query->when($filters['search'] ?? null, fn($query, $search) => $query->search($search));
-//    }
-//
-//    public function scopeSearch($query, $s)
-//    {
-//        $query->where('name', 'like', "%$s%");
-//    }
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['search']) {
+            $query->search($filters['search']);
+        }
+    }
+
+    public function scopeSearch($query, $s)
+    {
+        $query->where('note', 'like', "%$s%");
+    }
 }

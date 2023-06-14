@@ -19,8 +19,9 @@ class CheckoutFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::all()->random()->id,
+            'note' => fake()->text(),
             'customer_id' => Customer::all()->random()->id,
+            'user_id' => User::all()->random()->id,
         ];
     }
 }

@@ -15,9 +15,7 @@ class Confirmation extends Model
 
     protected $hidden = ['deleted_at'];
 
-    public $casts = [
-        'extra_attributes' => SchemalessAttributes::class,
-    ];
+    public $casts = ['extra_attributes' => SchemalessAttributes::class];
 
     public function scopeWithExtraAttributes()
     {

@@ -23,7 +23,19 @@ class UpdateCheckinRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'supplier_id' => 'required|integer|exists:suppliers,id',
+            'note' => 'nullable|string',
+            'supplier_id' => 'sometimes|integer|exists:suppliers,id',
+
+            'items' => 'sometimes|array|min:1',
+            'items.*.name' => 'sometimes',
+            'items.*.code' => 'sometimes|unique:items,code',
+            'items.*.quantity' => 'sometimes',
+            'items.*.unit' => 'sometimes',
+            'items.*.photo' => 'nullable|image',
+            'items.*.category_id' => 'nullable|exists:categories,id',
+            'items.*.type_id' => 'nullable|exists:types,id',
+            'items.*.room_id' => 'nullable|exists:rooms,id',
+            'items.*.group_id' => 'nullable|exists:groups,id',
         ];
     }
 }

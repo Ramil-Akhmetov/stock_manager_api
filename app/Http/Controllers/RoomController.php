@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RoomEvent;
 use App\Http\Requests\Room\StoreRoomRequest;
 use App\Http\Requests\Room\UpdateRoomRequest;
 use App\Http\Resources\Room\RoomCollection;
@@ -37,6 +38,7 @@ class RoomController extends Controller
     public function store(StoreRoomRequest $request)
     {
         $room = Room::create($request->validated());
+        RoomEvent::dispatch($room, 'store');
         return new RoomResource($room);
     }
 
@@ -53,7 +55,9 @@ class RoomController extends Controller
      */
     public function update(UpdateRoomRequest $request, Room $room)
     {
+        $old_user_id = $room->user_id;
         $room->update($request->validated());
+        RoomEvent::dispatch($room, 'update', $old_user_id);
         return new RoomResource($room);
     }
 

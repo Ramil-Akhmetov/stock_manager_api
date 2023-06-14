@@ -11,9 +11,11 @@ class Room extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'number', 'user_id', 'extra_attributes'];
+    protected $fillable = ['name', 'number', 'user_id', 'room_type_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
+
+    protected $with = ['room_type'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
@@ -29,10 +31,21 @@ class Room extends Model
         return $this->hasMany(Item::class);
     }
 
+    public function responsibilities()
+    {
+        return $this->hasMany(Responsibility::class);
+    }
+
+    public function room_type()
+    {
+        return $this->belongsTo(RoomType::class);
+    }
+
     public function scopeFilter($query, array $filters)
     {
-        //todo filter
-        $query->when($filters['search'] ?? null, fn($query, $search) => $query->search($search));
+        if ($filters['search']) {
+            $query->search($filters['search']);
+        }
     }
 
     public function scopeSearch($query, $s)

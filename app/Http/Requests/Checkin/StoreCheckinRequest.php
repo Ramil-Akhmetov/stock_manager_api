@@ -22,7 +22,19 @@ class StoreCheckinRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'note' => 'nullable|string',
             'supplier_id' => 'required|integer|exists:suppliers,id',
+
+            'items' => 'required|array|min:1',
+            'items.*.name' => 'required',
+            'items.*.code' => 'required|unique:items,code',
+            'items.*.quantity' => 'required_with:items.*.unit',
+            'items.*.unit' => 'required_with:items.*.quantity',
+            'items.*.photo' => 'nullable|image',
+            'items.*.category_id' => 'nullable|exists:categories,id',
+            'items.*.type_id' => 'nullable|exists:types,id',
+            'items.*.room_id' => 'nullable|exists:rooms,id',
+            'items.*.group_id' => 'nullable|exists:groups,id',
         ];
     }
 }

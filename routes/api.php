@@ -22,10 +22,18 @@ Route::apiResources([
     'items' => \App\Http\Controllers\ItemController::class,
     'types' => \App\Http\Controllers\TypeController::class,
     'groups' => \App\Http\Controllers\GroupController::class,
+    'room_types' => \App\Http\Controllers\RoomTypeController::class,
     'rooms' => \App\Http\Controllers\RoomController::class,
     'confirmations' => \App\Http\Controllers\ConfirmationController::class,
     'customers' => \App\Http\Controllers\CustomerController::class,
     'suppliers' => \App\Http\Controllers\SupplierController::class,
     'checkins' => \App\Http\Controllers\CheckinController::class,
     'checkouts' => \App\Http\Controllers\CheckoutController::class,
+    'transfers' => \App\Http\Controllers\TransferController::class,
+    'roles' => \App\Http\Controllers\RoleController::class,
+    'responsibilities' => \App\Http\Controllers\ResponsibilityController::class,
 ]);
+
+Route::apiResource(
+    'permissions', \App\Http\Controllers\PermissionController::class
+)->only(['index', 'show']);
