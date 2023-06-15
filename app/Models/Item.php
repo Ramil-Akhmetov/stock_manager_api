@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,7 +10,7 @@ use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
 class Item extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogActivity;
 
     protected $fillable = ['code', 'name', 'quantity', 'unit', 'photo', 'category_id', 'type_id', 'group_id', 'room_id', 'extra_attributes'];
 
@@ -21,6 +22,7 @@ class Item extends Model
 
     protected $with = ['category', 'type', 'group', 'room'];
 
+    //region Relationships
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -44,6 +46,7 @@ class Item extends Model
     public function checkins()
     {
         return $this->belongsToMany(Checkin::class)
+            ->using(CheckinItem::class)
             ->withPivot([
                 'room_id',
                 'quantity',
@@ -54,6 +57,7 @@ class Item extends Model
     public function checkouts()
     {
         return $this->belongsToMany(Checkout::class)
+            ->using(CheckoutItem::class)
             ->withPivot([
                 'room_id',
                 'quantity',
@@ -64,6 +68,7 @@ class Item extends Model
     public function transfers()
     {
         return $this->belongsToMany(Transfer::class)
+            ->using(ItemTransfer::class)
             ->withPivot([
                 'room_id',
                 'quantity',
@@ -75,6 +80,7 @@ class Item extends Model
     {
         return $this->hasMany(Confirmation::class);
     }
+    //endregion
 
     public function scopeWithExtraAttributes()
     {

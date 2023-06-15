@@ -2,16 +2,11 @@
 
 namespace App\Models;
 
-use App\Traits\LogActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Permission\Models\Role as BaseRole;
+use Spatie\Activitylog\Models\Activity as ActivityModel;
 
-class Role extends BaseRole
+class Activity extends ActivityModel
 {
-    use HasFactory, LogActivity;
-
-    protected $with = ['permissions'];
-
     public function scopeFilter($query, array $filters)
     {
         if ($filters['search']) {
@@ -21,6 +16,9 @@ class Role extends BaseRole
 
     public function scopeSearch($query, $s)
     {
-        $query->where('name', 'like', "%$s%");
+        //todo complete this
+        $query->where('log_name', 'like', "%$s%")
+            ->orWhere('description', 'like', "%$s%")
+            ->orWhere('subject_type', 'like', "%$s%");
     }
 }

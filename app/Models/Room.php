@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,7 +10,7 @@ use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
 class Room extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogActivity;
 
     protected $fillable = ['name', 'number', 'user_id', 'room_type_id', 'extra_attributes'];
 

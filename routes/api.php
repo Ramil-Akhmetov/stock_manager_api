@@ -37,3 +37,7 @@ Route::apiResources([
 Route::apiResource(
     'permissions', \App\Http\Controllers\PermissionController::class
 )->only(['index', 'show']);
+
+Route::apiResource(
+    'activities', \App\Http\Controllers\ActivityController::class
+)->only(['index', 'show']);

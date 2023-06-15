@@ -84,6 +84,8 @@ class RoleSeeder extends Seeder
 
         $role->givePermissionTo('permissions.read');
 
+        $role->givePermissionTo('activities.read');
+
         $role->givePermissionTo('roles.create');
         $role->givePermissionTo('roles.read');
         $role->givePermissionTo('roles.update');
