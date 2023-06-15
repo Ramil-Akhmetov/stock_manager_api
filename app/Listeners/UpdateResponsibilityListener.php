@@ -7,7 +7,6 @@ use App\Models\Responsibility;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Log;
 
 class UpdateResponsibilityListener
 {
@@ -30,6 +29,7 @@ class UpdateResponsibilityListener
     private function store(RoomEvent $event): void
     {
         Responsibility::create([
+            'start_date' => Carbon::now()->toDateString(),
             'user_id' => $event->room->user_id,
             'room_id' => $event->room->id,
         ]);
@@ -40,13 +40,22 @@ class UpdateResponsibilityListener
         if($event->old_user_id === $event->room->user_id) {
             return;
         }
-        //todo debug this, sometimes didn't work
-        $responsibility = Responsibility::where('user_id', $event->room->user_id)
-            ->where('room_id', $event->room->id)
-            ->where('end_date', null)
-            ->first();
-        $responsibility->update([
-            'end_date' => Carbon::now()->toDateString(),
+
+        if($event->old_user_id !== null) {
+            $responsibility = Responsibility::where('user_id', $event->old_user_id)
+                ->where('room_id', $event->room->id)
+                ->where('end_date', null)
+                ->first();
+            //todo work but can happen 500 exception
+            //maybe should add if statement or change something in database
+            $responsibility->update([
+                'end_date' => Carbon::now()->toDateString(),
+            ]);
+            $responsibility->save();
+        }
+
+        Responsibility::create([
+            'start_date' => Carbon::now()->toDateString(),
             'user_id' => $event->room->user_id,
             'room_id' => $event->room->id,
         ]);

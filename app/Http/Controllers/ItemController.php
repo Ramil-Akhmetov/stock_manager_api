@@ -38,7 +38,6 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $request)
     {
-        //todo debug this
         $validated = $request->validated();
         $item = DB::transaction(function () use ($validated) {
             $item = Item::create($validated);
@@ -61,7 +60,6 @@ class ItemController extends Controller
      */
     public function update(UpdateItemRequest $request, Item $item)
     {
-        //todo debug this
         $validated = $request->validated();
         $item = DB::transaction(function () use ($item, $validated) {
             $item->update($validated);

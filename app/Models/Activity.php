@@ -16,7 +16,6 @@ class Activity extends ActivityModel
 
     public function scopeSearch($query, $s)
     {
-        //todo complete this
         $query->where('log_name', 'like', "%$s%")
             ->orWhere('description', 'like', "%$s%")
             ->orWhere('subject_type', 'like', "%$s%");

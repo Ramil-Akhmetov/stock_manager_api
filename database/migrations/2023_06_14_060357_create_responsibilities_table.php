@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('responsibilities', function (Blueprint $table) {
             $table->id();
-            $table->date('start_date')->default(\Carbon\Carbon::now()->toDateString());
+            $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Room::class);

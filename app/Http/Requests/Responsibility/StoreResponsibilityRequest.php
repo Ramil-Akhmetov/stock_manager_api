@@ -22,7 +22,7 @@ class StoreResponsibilityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_date' => 'nullable|date',
+            'start_date' => 'sometimes|date',
             'end_date' => 'nullable|date',
             'user_id' => 'required|exists:users,id',
             'room_id' => 'required|exists:rooms,id',

@@ -42,10 +42,10 @@ class ConfirmationController extends Controller
         $validated += [
             'user_id' => $request->user()->id,
         ];
-        //todo debug this
         $confirmation = DB::transaction(function () use ($validated) {
             $confirmation = Confirmation::create($validated);
             ConfirmationEvent::dispatch($confirmation, 'store');
+            return $confirmation;
         });
         return new ConfirmationResource($confirmation);
     }
@@ -63,11 +63,11 @@ class ConfirmationController extends Controller
      */
     public function update(UpdateConfirmationRequest $request, Confirmation $confirmation)
     {
-        //todo debug this
         $validated = $request->validated();
         $confirmation = DB::transaction(function () use ($confirmation, $validated) {
             $confirmation->update($validated);
             ConfirmationEvent::dispatch($confirmation, 'store');
+            return $confirmation;
         });
         return new ConfirmationResource($confirmation);
     }

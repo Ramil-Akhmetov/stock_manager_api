@@ -22,7 +22,7 @@ class UpdateResponsibilityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_date' => 'nullable|date',
+            'start_date' => 'sometimes|date',
             'end_date' => 'nullable|date',
             'user_id' => 'sometimes|exists:users,id',
             'room_id' => 'sometimes|exists:rooms,id',

@@ -29,7 +29,7 @@ class UpdateItemRequest extends FormRequest
             'photo' => 'nullable|image',
             'category_id' => 'nullable|exists:categories,id',
             'type_id' => 'nullable|exists:types,id',
-            'room_id' => 'nullable|exists:rooms,id',
+            'room_id' => 'sometimes|exists:rooms,id',
             'group_id' => 'nullable|exists:groups,id',
         ];
     }
