@@ -27,11 +27,7 @@ class Checkin extends Model
         return $this->extra_attributes->modelScope();
     }
 
-    public function supplier()
-    {
-        return $this->belongsTo(Supplier::class);
-    }
-
+    //region Relationships
     public function items()
     {
         return $this->belongsToMany(Item::class)
@@ -42,6 +38,18 @@ class Checkin extends Model
             ])
             ->withTimestamps();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+    //endregion
 
     public function scopeFilter($query, array $filters)
     {

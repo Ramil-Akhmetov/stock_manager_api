@@ -25,10 +25,13 @@ class Supplier extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    //region Relationships
     public function checkins()
     {
         return $this->hasMany(Checkin::class);
     }
+
+    //endregion
 
     public function scopeFilter($query, array $filters)
     {

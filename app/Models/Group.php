@@ -25,10 +25,13 @@ class Group extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    //region Relationships
     public function items()
     {
         return $this->hasMany(Item::class);
     }
+
+    //endregion
 
     public function scopeFilter($query, array $filters)
     {

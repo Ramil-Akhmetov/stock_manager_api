@@ -23,6 +23,7 @@ class Responsibility extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    //region Relationships
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -32,4 +33,6 @@ class Responsibility extends Model
     {
         return $this->belongsTo(Room::class);
     }
+
+    //endregion
 }

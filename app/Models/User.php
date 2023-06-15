@@ -28,10 +28,38 @@ class User extends Authenticatable
 
     protected $with = ['roles:id,name'];
 
+    //region Relationships
     public function responsibilities()
     {
         return $this->hasMany(Responsibility::class);
     }
+
+    public function checkins()
+    {
+        return $this->hasMany(Checkin::class);
+    }
+
+    public function checkouts()
+    {
+        return $this->hasMany(Checkout::class);
+    }
+
+    public function transfers()
+    {
+        return $this->hasMany(Transfer::class);
+    }
+
+    public function room()
+    {
+        return $this->hasOne(Room::class);
+    }
+
+    public function confirmations()
+    {
+        return $this->hasMany(Confirmation::class);
+    }
+
+    //endregion
 
     public function scopeWithExtraAttributes()
     {

@@ -23,8 +23,16 @@ class Confirmation extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    //region Relationships
     public function item()
     {
         return $this->belongsTo(Item::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    //endregion
 }

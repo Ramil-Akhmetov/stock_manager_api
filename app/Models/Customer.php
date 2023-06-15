@@ -25,10 +25,13 @@ class Customer extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    //region Relationships
     public function checkouts()
     {
         return $this->hasMany(Checkout::class);
     }
+
+    //endregion
 
     public function scopeFilter($query, array $filters)
     {

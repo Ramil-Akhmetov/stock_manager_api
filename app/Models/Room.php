@@ -27,6 +27,7 @@ class Room extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    //region Relationships
     public function items()
     {
         return $this->hasMany(Item::class);
@@ -41,6 +42,13 @@ class Room extends Model
     {
         return $this->belongsTo(RoomType::class);
     }
+
+    public function transfers()
+    {
+        return $this->belongsTo(Transfer::class);
+    }
+
+    //endregion
 
     public function scopeFilter($query, array $filters)
     {

@@ -27,6 +27,7 @@ class Checkout extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    //region Relationships
     public function items()
     {
         return $this->belongsToMany(Item::class)
@@ -37,6 +38,17 @@ class Checkout extends Model
             ])
             ->withTimestamps();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+    //endregion
 
     public function scopeFilter($query, array $filters)
     {

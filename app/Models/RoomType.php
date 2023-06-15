@@ -25,10 +25,13 @@ class RoomType extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    //region Relationships
     public function rooms()
     {
         return $this->hasMany(Room::class);
     }
+
+    //endregion
 
     public function scopeFilter($query, array $filters)
     {
