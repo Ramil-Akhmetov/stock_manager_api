@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Traits\LogActivity;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Permission\Models\Role as BaseRole;
 
 class Role extends BaseRole
 {
-    use HasFactory, LogActivity;
+    //todo doesn't show in properties
+    use LogActivity;
 
     protected $with = ['permissions'];
 
