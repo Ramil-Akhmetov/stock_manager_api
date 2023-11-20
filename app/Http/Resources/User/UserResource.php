@@ -18,6 +18,12 @@ class UserResource extends JsonResource
         if (isset($data['photo'])) {
             $data['photo'] = url('/') . '/storage/' . $data['photo'];
         }
+
+        $permissions = $request->user()->getAllPermissions()->pluck('name')->toArray();
+        $data += [ 'permissions' => $permissions ];
+
+        $roles = $request->user()->roles()->pluck('name')->toArray();
+        $data += [ 'roles' => $roles];
         return $data;
     }
 }

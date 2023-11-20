@@ -8,6 +8,7 @@ use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -15,15 +16,20 @@ class UserController extends Controller
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['can:users.create'],['only' => ['store']]);
-        $this->middleware(['can:users.read'],['only' => ['index', 'show']]);
-        $this->middleware(['can:users.update'],['only' => ['update']]);
-        $this->middleware(['can:users.delete'],['only' => ['destroy']]);
+        $this->middleware(['can:users.create'], ['only' => ['store']]);
+        $this->middleware(['can:users.read'], ['only' => ['index', 'show']]);
+        $this->middleware(['can:users.update'], ['only' => ['update']]);
+        $this->middleware(['can:users.delete'], ['only' => ['destroy']]);
     }
     public function index(Request $request)
     {
         $filters = $request->all('search');
-        $users = User::filter($filters)->paginate();
+        //TODO remove only_verified_at
+        if ($request->input('only_verified') == 'true') {
+            $users = User::where('email_verified_at', '!=', null)->filter($filters)->paginate();
+        } else {
+            $users = User::filter($filters)->paginate();
+        }
         return new UserCollection($users);
     }
 
@@ -31,6 +37,9 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
         $user->assignRole($request->input('roles'));
+        $invite_code = InviteCodeController::generateCode();
+        $user->invite_code()->create(['code' => $invite_code]);
+
         return new UserResource($user);
     }
 

@@ -21,9 +21,10 @@ class UpdateItemRequest extends FormRequest
      */
     public function rules(): array
     {
+        $item = request()->route('item');
         return [
             'name' => 'sometimes',
-            'code' => 'sometimes|unique:items,code,'. $this->user()->id,
+            'code' => 'sometimes|unique:items,code,'. $item->id,
             'quantity' => 'sometimes',
             'unit' => 'nullable',
             'photo' => 'nullable|image',

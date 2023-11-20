@@ -46,7 +46,7 @@ class UpdateResponsibilityListener
                 ->where('room_id', $event->room->id)
                 ->where('end_date', null)
                 ->first();
-            //todo work but can happen 500 exception
+            //TODO work but can happen 500 exception
             //maybe should add if statement or change something in database
             $responsibility->update([
                 'end_date' => Carbon::now()->toDateString(),

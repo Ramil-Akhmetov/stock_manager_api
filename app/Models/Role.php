@@ -7,7 +7,7 @@ use Spatie\Permission\Models\Role as BaseRole;
 
 class Role extends BaseRole
 {
-    //todo doesn't show in properties
+    //TODO doesn't show in properties logs
     use LogActivity;
 
     protected $with = ['permissions'];

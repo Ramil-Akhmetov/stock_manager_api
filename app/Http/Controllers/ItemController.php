@@ -28,8 +28,9 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $filters = $request->all('search');
-        $items = Item::filter($filters)->paginate();
+        $filters = $request->all('search', 'category_id', 'type_id');
+        //TODO add pagination, paginate only if frontend send 'limit' query
+        $items = Item::filter($filters)->get();
         return new ItemCollection($items);
     }
 

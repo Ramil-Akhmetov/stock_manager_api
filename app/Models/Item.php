@@ -87,10 +87,17 @@ class Item extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    //TODO filter
     public function scopeFilter($query, array $filters)
     {
         if ($filters['search']) {
             $query->search($filters['search']);
+        }
+        if ($filters['category_id']) {
+            $query->where('category_id', $filters['category_id']);
+        }
+        if ($filters['type_id']) {
+            $query->where('type_id', $filters['type_id']);
         }
     }
 

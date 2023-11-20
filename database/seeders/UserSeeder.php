@@ -13,11 +13,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::factory()->create([
-            'name' => 'Super-Admin',
-            'email' => 'superadmin@email.com',
-        ]);
-        $user->assignRole('Super-Admin');
+        // $user = User::factory()->create([
+        //     'name' => 'Super-Admin',
+        //     'email' => 'superadmin@email.com',
+        // ]);
+        // $user->assignRole('Super-Admin');
 
         $user = User::factory()->create([
             'name' => 'Admin',
@@ -29,5 +29,7 @@ class UserSeeder extends Seeder
             'name' => 'user',
             'email' => 'user@email.com',
         ]);
+
+        User::factory(10)->create();
     }
 }

@@ -43,7 +43,7 @@ class CheckinController extends Controller
             'user_id' => $request->user()->id,
         ];
 
-        //todo maybe should use event
+        //TODO maybe should use event
         $checkin = DB::transaction(function () use ($validated) {
             $checkin = Checkin::create($validated);
 
@@ -72,7 +72,7 @@ class CheckinController extends Controller
      */
     public function update(UpdatecheckinRequest $request, Checkin $checkin)
     {
-        //todo add update
+        //TODO add update
         $checkin->update($request->validated());
         return new CheckinResource($checkin);
     }

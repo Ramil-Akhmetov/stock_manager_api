@@ -43,7 +43,7 @@ class CheckoutController extends Controller
             'user_id' => $request->user()->id,
         ];
 
-        //todo maybe should use event
+        //TODO maybe should use event
         $checkout = DB::transaction(function () use ($validated) {
             $checkout = Checkout::create($validated);
 
@@ -72,7 +72,7 @@ class CheckoutController extends Controller
      */
     public function update(UpdatecheckoutRequest $request, Checkout $checkout)
     {
-        //todo add update
+        //TODO add update
         $checkout->update($request->validated());
         return new CheckoutResource($checkout);
     }

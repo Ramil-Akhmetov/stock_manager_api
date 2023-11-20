@@ -43,7 +43,7 @@ class TransferController extends Controller
             'user_id' => $request->user()->id,
         ];
 
-        //todo maybe should use event
+        //TODO maybe should use event
         $transfer = DB::transaction(function () use ($validated) {
             $transfer = Transfer::create($validated);
 
@@ -74,7 +74,7 @@ class TransferController extends Controller
      */
     public function update(UpdatetransferRequest $request, Transfer $transfer)
     {
-        //todo add update
+        //TODO add update
         $transfer->update($request->validated());
         return new TransferResource($transfer);
     }

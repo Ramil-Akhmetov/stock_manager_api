@@ -33,7 +33,7 @@ class StoreTransferRequest extends FormRequest
         ];
     }
 
-    //todo item.room_id (from room) should be equal, validate it
+    //TODO item.room_id (from room) should be equal, validate it
 //    public function validated($key = null, $default = null)
 //    {
 //        $data = $this->validator->validated();

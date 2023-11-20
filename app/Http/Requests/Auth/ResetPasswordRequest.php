@@ -2,14 +2,11 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\InviteCode;
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
-class RegisterRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,48 +24,40 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invite_code' => 'required|string',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-            'password_confirmation' => 'required|string',
+            'old_password' => 'required',
+            'new_password' => 'required',
+            'new_password_confirmation' => 'required',
         ];
     }
 
     public function validated($key = null, $default = null)
     {
         $data = $this->validator->validated();
-        if ($data['password'] !== $data['password_confirmation']) {
+
+        if ($data['new_password'] !== $data['new_password_confirmation']) {
             throw new HttpResponseException(
                 response()->json([
-                    'message' => 'The password confirmation does not match',
+                    'message' => 'The new password confirmation does not match',
                     'errors' => [
-                        'password_confirmation' => [
-                            'The password confirmation does not match',
-                        ]
-                    ]
-                ], 422)
-            );
-        }
-        //TODO check how long should be remember_token
-        //TODO should delete remember_token from everywhere
-
-        $data['remember_token'] = Str::random(60);
-
-        if (!InviteCode::where('code', $data['invite_code'])->first()) {
-            throw new HttpResponseException(
-                response()->json([
-                    'message' => 'The invite code is invalid',
-                    'errors' => [
-                        'invite_code' => [
-                            'The invite code is invalid',
+                        'new_password_confirmation' => [
+                            'The new password confirmation does not match',
                         ]
                     ]
                 ], 422)
             );
         }
 
-        if ($this->input('password')) {
-            $data['password'] = Hash::make($this->input('password'));
+        if (!Hash::check($data['old_password'], request()->user()->password)) {
+            throw new HttpResponseException(
+                response()->json([
+                    'message' => 'The current password field does not match',
+                    'errors' => [
+                        'old_password' => [
+                            'The current password field does not match',
+                        ]
+                    ]
+                ], 422)
+            );
         }
         return $data;
     }

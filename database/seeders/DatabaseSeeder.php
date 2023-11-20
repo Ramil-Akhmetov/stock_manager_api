@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             CheckoutSeeder::class,
             TransferSeeder::class,
             ResponsibilitySeeder::class,
+            InviteCodeSeeder::class,
         ]);
     }
 }

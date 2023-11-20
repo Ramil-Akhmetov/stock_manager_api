@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\LogActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,12 +14,14 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, LogActivity;
 
-    protected $fillable = ['name', 'surname', 'patronymic', 'email', 'password', 'photo'];
+    protected $fillable = ['name', 'surname', 'patronymic', 'email', 'phone', 'password', 'photo'];
 
+    //TODO maybe delete email_verified_at from hidden
+    //TODO should think when user must verify email
     protected $hidden = ['password', 'remember_token', 'email_verified_at', 'deleted_at'];
 
     protected $casts = [
@@ -27,7 +30,8 @@ class User extends Authenticatable
         'extra_attributes' => SchemalessAttributes::class,
     ];
 
-    protected $with = ['roles:id,name'];
+    // TODO do smth
+    // protected $with = ['roles:id,name', 'checkins'];
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -68,6 +72,11 @@ class User extends Authenticatable
         return $this->hasMany(Confirmation::class);
     }
 
+    public function invite_code()
+    {
+        return $this->hasOne(InviteCode::class);
+    }
+
     //endregion
 
     public function scopeWithExtraAttributes()
@@ -90,4 +99,11 @@ class User extends Authenticatable
             ->orWhere('phone', 'like', "%$s%")
             ->orWhere('email', 'like', "%$s%");
     }
+
+    //TODO
+    //    public function sendPasswordResetNotification($token)
+    //    {
+    //        $url = env('FRONTEND_URL', 'http://localhost:3000') . '/reset-password/' . $token;
+    //        $this->notify(new ResetPasswordNotification($url));
+    //    }
 }
