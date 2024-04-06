@@ -7,6 +7,8 @@ use Spatie\Activitylog\Models\Activity as ActivityModel;
 
 class Activity extends ActivityModel
 {
+    public $with = ['causer'];
+
     public function scopeFilter($query, array $filters)
     {
         if ($filters['search']) {

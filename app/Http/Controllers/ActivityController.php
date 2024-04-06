@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Activity\ActivityCollection;
-use App\Http\Resources\Activity\ActivityResource;
+use App\Http\Requests\Activity\IndexActivityRequest;
 use App\Models\Activity;
 use Illuminate\Http\Request;
+use App\Http\Resources\Activity\ActivityResource;
+use App\Http\Resources\Activity\ActivityCollection;
 
 class ActivityController extends Controller
 {
@@ -19,10 +20,28 @@ class ActivityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(IndexActivityRequest $request)
     {
-        $filters = $request->all('search');
-        $activities = Activity::filter($filters)->latest()->get();
+        $validated = $request->validated();
+
+        $limit = isset($validated['limit']) ? $validated['limit'] : 10;
+        // $filters = $validated['search'];
+        $orderBy = isset($validated['order_by']) ? $validated['order_by'] : 'created_at';
+        $order = isset($validated['order']) ? $validated['order'] : 'desc';
+
+        $activities = Activity::orderBy($orderBy, $order)->paginate($limit);
+        // return response()->json([
+        //     'data' => [],
+        //     "meta" =>  [
+        //         "current_page" => 1,
+        //         "from" => 1,
+        //         "last_page" => 1,
+        //         "path" => "http://127.0.0.1:8000/api/activities",
+        //         "per_page" => 10,
+        //         "to" => 0,
+        //         "total" => 0
+        //     ]
+        // ]);
         return new ActivityCollection($activities);
     }
 

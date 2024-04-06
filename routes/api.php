@@ -19,25 +19,21 @@ include_once __DIR__ . '/api/mail.php';
 include_once __DIR__ . '/api/password.php';
 
 
-Route::apiResources([
-    'users' => \App\Http\Controllers\UserController::class,
-    'categories' => \App\Http\Controllers\CategoryController::class,
-    'items' => \App\Http\Controllers\ItemController::class,
-    'types' => \App\Http\Controllers\TypeController::class,
-    'groups' => \App\Http\Controllers\GroupController::class,
-    'room_types' => \App\Http\Controllers\RoomTypeController::class,
-    'rooms' => \App\Http\Controllers\RoomController::class,
-    'confirmations' => \App\Http\Controllers\ConfirmationController::class,
-    'customers' => \App\Http\Controllers\CustomerController::class,
-    'suppliers' => \App\Http\Controllers\SupplierController::class,
-    'checkins' => \App\Http\Controllers\CheckinController::class,
-    'checkouts' => \App\Http\Controllers\CheckoutController::class,
-    'transfers' => \App\Http\Controllers\TransferController::class,
-    'roles' => \App\Http\Controllers\RoleController::class,
-    'responsibilities' => \App\Http\Controllers\ResponsibilityController::class,
-]);
+Route::apiResource('users', \App\Http\Controllers\UserController::class);
+Route::apiResource('categories', \App\Http\Controllers\CategoryController::class);
+Route::apiResource('items', \App\Http\Controllers\ItemController::class);
+Route::apiResource('types', \App\Http\Controllers\TypeController::class);
+Route::apiResource('groups', \App\Http\Controllers\GroupController::class);
+Route::apiResource('room_types', \App\Http\Controllers\RoomTypeController::class);
+Route::apiResource('rooms', \App\Http\Controllers\RoomController::class);
+Route::apiResource('confirmations', \App\Http\Controllers\ConfirmationController::class);
+Route::apiResource('customers', \App\Http\Controllers\CustomerController::class);
+Route::apiResource('suppliers', \App\Http\Controllers\SupplierController::class);
+Route::apiResource('checkins', \App\Http\Controllers\CheckinController::class);
+Route::apiResource('checkouts', \App\Http\Controllers\CheckoutController::class);
+Route::apiResource('transfers', \App\Http\Controllers\TransferController::class);
+Route::apiResource('roles', \App\Http\Controllers\RoleController::class);
+Route::apiResource('responsibilities', \App\Http\Controllers\ResponsibilityController::class);
 
-Route::apiResource('permissions', \App\Http\Controllers\PermissionController::class)
-    ->only(['index', 'show']);
-Route::apiResource('activities', \App\Http\Controllers\ActivityController::class)
-    ->only(['index', 'show']);
+Route::apiResource('permissions', \App\Http\Controllers\PermissionController::class)->only(['index', 'show']);
+Route::apiResource('activities', \App\Http\Controllers\ActivityController::class)->only(['index', 'show']);

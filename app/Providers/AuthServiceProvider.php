@@ -33,18 +33,18 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         //TODO check verifing email, maybe should hold it in fronted instead
-//        VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
-//            dd($url);
-//            $url = env('FRONTEND_URL', 'http://localhost:3000') . '/email-verify/' . $url;
-//
-//            return (new MailMessage)
-//                ->subject('Verify Email Address')
-//                ->line('Click the button below to verify your email address.')
-//                ->action('Verify Email Address', $url);
-//        });
+        // VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
+        //     // $url for frontend
+        //     $url = env('FRONTEND_URL', 'http://localhost:5173') . '/email-verify/' . $url;
+
+        //     return (new MailMessage)
+        //         ->subject('Verify Email Address')
+        //         ->line('Click the button below to verify your email address.')
+        //         ->action('Verify Email Address', $url);
+        // });
 
         ResetPassword::createUrlUsing(function (User $user, string $token) {
-            $url = env('FRONTEND_URL', 'http://localhost:3000') . '/reset-password/' . $token;
+            $url = env('FRONTEND_URL', 'http://localhost:5173') . '/reset-password/' . $token;
             return $url;
         });
     }

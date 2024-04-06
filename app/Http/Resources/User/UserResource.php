@@ -15,15 +15,16 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         $data = parent::toArray($request);
-        if (isset($data['photo'])) {
-            $data['photo'] = url('/') . '/storage/' . $data['photo'];
-        }
+        // TODO return photo to user
+        // if (isset($data['photo'])) {
+        //     $data['photo'] = url('/') . '/storage/' . $data['photo'];
+        // }
 
         $permissions = $request->user()->getAllPermissions()->pluck('name')->toArray();
-        $data += [ 'permissions' => $permissions ];
+        $data += ['permissions' => $permissions];
 
         $roles = $request->user()->roles()->pluck('name')->toArray();
-        $data += [ 'roles' => $roles];
+        $data += ['roles' => $roles];
         return $data;
     }
 }

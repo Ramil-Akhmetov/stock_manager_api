@@ -16,4 +16,11 @@ class ActivityCollection extends ResourceCollection
     {
         return parent::toArray($request);
     }
+
+    public function paginationInformation($request, $paginated, $default)
+    {
+        unset($default['links']);
+        unset($default['meta']['links']);
+        return $default;
+    }
 }

@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\LogActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,7 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     //TODO maybe delete email_verified_at from hidden
     //TODO should think when user must verify email
-    protected $hidden = ['password', 'remember_token', 'email_verified_at', 'deleted_at'];
+    protected $hidden = ['password', 'remember_token', 'deleted_at'];
 
     protected $casts = [
         'email_verified_at' => 'datetime',

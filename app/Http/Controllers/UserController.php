@@ -25,6 +25,7 @@ class UserController extends Controller
     {
         $filters = $request->all('search');
         //TODO remove only_verified_at
+        //TODO add order by like in ActivityController
         if ($request->input('only_verified') == 'true') {
             $users = User::where('email_verified_at', '!=', null)->filter($filters)->paginate();
         } else {
