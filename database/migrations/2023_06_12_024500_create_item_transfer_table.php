@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('reason')->nullable();
             $table->foreignIdFor(Transfer::class);
             $table->foreignIdFor(Item::class);
-            $table->foreignIdFor(Room::class); //to_room_id
-            $table->unsignedFloat('quantity')->nullable();
+            $table->foreignIdFor(Room::class, "to_room_id");
+            $table->foreignIdFor(Room::class, "from_room_id");
             $table->timestamps();
         });
     }

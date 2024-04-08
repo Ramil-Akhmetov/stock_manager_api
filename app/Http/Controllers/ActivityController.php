@@ -25,23 +25,12 @@ class ActivityController extends Controller
         $validated = $request->validated();
 
         $limit = isset($validated['limit']) ? $validated['limit'] : 10;
-        // $filters = $validated['search'];
+        // TODO add search filter
+//       $filters = $validated['search'];
         $orderBy = isset($validated['order_by']) ? $validated['order_by'] : 'created_at';
         $order = isset($validated['order']) ? $validated['order'] : 'desc';
 
         $activities = Activity::orderBy($orderBy, $order)->paginate($limit);
-        // return response()->json([
-        //     'data' => [],
-        //     "meta" =>  [
-        //         "current_page" => 1,
-        //         "from" => 1,
-        //         "last_page" => 1,
-        //         "path" => "http://127.0.0.1:8000/api/activities",
-        //         "per_page" => 10,
-        //         "to" => 0,
-        //         "total" => 0
-        //     ]
-        // ]);
         return new ActivityCollection($activities);
     }
 
