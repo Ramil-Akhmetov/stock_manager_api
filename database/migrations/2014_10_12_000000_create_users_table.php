@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->text('photo')->nullable();
             $table->schemalessAttributes('extra_attributes');
-            //todo should delete remember token //test
+            //todo should delete remember token
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
