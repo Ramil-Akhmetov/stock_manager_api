@@ -20,7 +20,6 @@ return new class extends Migration
             $table->foreignIdFor(Item::class);
 
             $table->boolean('fullCheckout');
-            $table->string('newCode')->nullable();
             $table->foreignIdFor(\App\Models\Rack::class, 'rack_id')->nullable();
             $table->integer('quantity');
 

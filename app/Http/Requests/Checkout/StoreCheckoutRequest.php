@@ -32,7 +32,6 @@ class StoreCheckoutRequest extends FormRequest
             'items.*.id' => 'required|integer|exists:items,id',
             'items.*.fullCheckout' => 'nullable|boolean',
 
-            'items.*.newCode' => 'nullable|string|unique:items,code',
             'items.*.quantity' => 'nullable|numeric|min:1'
         ];
     }
@@ -48,10 +47,6 @@ class StoreCheckoutRequest extends FormRequest
         $items = $this->input('items') ?? [];
 
         foreach ($items as $index => $item) {
-            $validator->sometimes("items.$index.newCode", 'required', function () use ($item) {
-                return isset($item['fullCheckout']) && $item['fullCheckout'] === false;
-            });
-
             $validator->sometimes("items.$index.quantity", 'required', function () use ($item) {
                 return isset($item['fullCheckout']) && $item['fullCheckout'] === false;
             });

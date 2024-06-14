@@ -35,7 +35,7 @@ class ItemFactory extends Factory
             'type_id' => Type::all()->random()->id,
             'room_id' => $room->id,
             'rack_id' => $rack,
-            'unit' => fake()->word(),
+            'unit' => 'шт',
         ];
     }
 }

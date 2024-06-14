@@ -83,28 +83,27 @@ class CheckoutController extends Controller
                         'rack_id' => $db_item->rack_id,
                         'quantity' => $db_item->quantity,
                     ]);
+                    $db_item->delete();
                 } else {
                     $checkout->items()->attach($db_item->id, [
                         'fullCheckout' => false,
                         'rack_id' => $db_item->rack_id,
                         'quantity' => $item['quantity'],
-                        'newCode' => $item['newCode'],
                     ]);
 
                     $i = $checkout->items()->find($db_item->id);
+                    $db_item->delete();
                     $newItem = Item::create([
-                        'code' => $i->pivot->newCode,
+                        'code' => $i->code,
                         'name' => $i->name,
-                        'quantity' => $i->pivot->quantity,
+                        'quantity' => $db_item->quantity - $i->pivot->quantity,
                         'unit' => $i->unit,
                         'category_id' => $i->category_id,
                         'type_id' => $i->type_id,
                         'room_id' => $checkout->room_id,
-                        'rack_id' => $i->pivot->rack_id,
+                        'rack_id' => $i->rack_id,
                     ]);
                 }
-
-                $db_item->delete();
             }
             return $checkout;
         });

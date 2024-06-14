@@ -43,6 +43,7 @@ Route::apiResource('invite_codes', \App\Http\Controllers\InviteCodeController::c
 Route::apiResource('transfer_statuses', \App\Http\Controllers\TransferStatusController::class)->only(['index']);
 
 Route::post('transfers/{transfer}/change_status', [\App\Http\Controllers\TransferController::class, 'changeStatus']);
+Route::post('change_email', [\App\Http\Controllers\UserController::class, 'changeEmail']);
 
 Route::apiResource('racks', \App\Http\Controllers\RackController::class)->only('index', 'show');
 

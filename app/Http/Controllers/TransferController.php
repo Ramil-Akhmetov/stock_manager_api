@@ -43,6 +43,10 @@ class TransferController extends Controller
 
         $query = Transfer::query();
 
+        if ($request->user()->roles()->first()->name != 'Администратор') {
+            $query->where('user_id', $request->user()->id);
+        }
+
         if ($only_mines) {
             $query->where('user_id', $request->user()->id);
         }

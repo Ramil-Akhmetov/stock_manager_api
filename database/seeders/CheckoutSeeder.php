@@ -31,7 +31,6 @@ class CheckoutSeeder extends Seeder
                 $checkout->items()->attach($item, [
                     'rack_id' => $item->rack_id,
                     'fullCheckout' => $fullCheckout,
-                    'newCode' => $fullCheckout ? null : Str::random(5),
                     'quantity' => $quantity,
                 ]);
             }

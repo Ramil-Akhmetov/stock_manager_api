@@ -34,7 +34,6 @@ class Checkout extends Model
             ->withPivot([
                 'fullCheckout',
                 'rack_id',
-                'newCode',
                 'quantity',
             ])
             ->withTrashed()

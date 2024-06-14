@@ -27,8 +27,8 @@ class UpdateSupplierRequest extends FormRequest
             'name' => 'sometimes|string',
             'surname' => 'sometimes|string',
             'patronymic' => 'sometimes|string',
-            'phone' => 'sometimes|string|unique:customers,phone,' . $supplier->id,
-            'email' => 'sometimes|string|email|unique:customers,email,' . $supplier->id,
+            'phone' => 'sometimes|string|unique:suppliers,phone,' . $supplier->id,
+            'email' => 'sometimes|string|email|unique:suppliers,email,' . $supplier->id,
             'company' => 'sometimes|string',
         ];
     }

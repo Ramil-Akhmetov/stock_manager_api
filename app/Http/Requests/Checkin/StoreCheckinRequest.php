@@ -33,7 +33,7 @@ class StoreCheckinRequest extends FormRequest
             'items.*.name' => 'required',
             'items.*.rack_id' => 'required|exists:racks,id',
             'items.*.code' => 'required|unique:items,code',
-            'items.*.quantity' => 'required|numeric|min:1',
+            'items.*.quantity' => 'required|numeric|min:1|max:9999',
             'items.*.unit' => 'required',
             'items.*.category_id' => 'nullable|exists:categories,id',
             'items.*.type_id' => 'nullable|exists:types,id',

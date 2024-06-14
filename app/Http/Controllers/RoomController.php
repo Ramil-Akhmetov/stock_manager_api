@@ -69,11 +69,15 @@ class RoomController extends Controller
     {
         $validated = $request->validated();
 
+        // return response()->json([
+        //     'data' => $validated,
+        // ], 400);
+
         $room = DB::transaction(function () use ($validated) {
             $room = Room::create($validated);
 
             foreach ($validated['racks'] as $rack) {
-                $new_rack = Room::create([
+                $new_rack = Rack::create([
                     'name' => $rack['name'],
                     'room_id' => $room->id,
                 ]);
@@ -112,7 +116,7 @@ class RoomController extends Controller
                         'name' => $rack['name'],
                     ]);
                 } else {
-                    $new_rack = Room::create([
+                    $new_rack = Rack::create([
                         'name' => $rack['name'],
                         'room_id' => $room->id,
                     ]);

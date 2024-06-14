@@ -77,4 +77,20 @@ class UserController extends Controller
         }
         $user->delete();
     }
+
+    public function changeEmail(Request $request)
+    {
+        $user = $request->user();
+        $validated = $request->validate([
+            'email' => 'sometimes|string|email|unique:users,email,' . $user->id,
+        ]);
+
+        $user->update([
+            'email' => $validated['email'],
+        ]);
+
+        $user->save();
+
+        return new UserResource($user);
+    }
 }

@@ -27,7 +27,7 @@ class StoreRoomRequest extends FormRequest
             'user_id' => 'sometimes|integer|exists:users,id',
             'room_type_id' => 'required|integer|exists:room_types,id',
 
-            'racks' => 'nullable|array|min:1',
+            'racks' => 'nullable|array',
             'racks.*.name' => 'required_if:racks,null|string', //required if racks is not null
         ];
     }
