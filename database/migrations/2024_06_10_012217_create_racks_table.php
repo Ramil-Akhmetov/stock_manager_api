@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('racks', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->schemalessAttributes('extra_attributes');
+            $table->foreignIdFor(\App\Models\Room::class);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('racks');
     }
 };

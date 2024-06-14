@@ -14,7 +14,7 @@ class ActivityController extends Controller
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['permission:activities.read'], ['only' => ['index', 'show']]);
+//        $this->middleware(['permission:activities.read'], ['only' => ['index', 'show']]);
     }
 
     /**
@@ -27,7 +27,7 @@ class ActivityController extends Controller
         $limit = isset($validated['limit']) ? $validated['limit'] : 10;
         // TODO add search filter
 //       $filters = $validated['search'];
-        $orderBy = isset($validated['order_by']) ? $validated['order_by'] : 'created_at';
+        $orderBy = isset($validated['orderBy']) ? $validated['orderBy'] : 'created_at';
         $order = isset($validated['order']) ? $validated['order'] : 'desc';
 
         $activities = Activity::orderBy($orderBy, $order)->paginate($limit);

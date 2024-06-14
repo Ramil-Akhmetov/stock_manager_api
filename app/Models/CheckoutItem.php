@@ -11,7 +11,7 @@ class CheckoutItem extends Pivot
 
     public $incrementing = true;
 
-    protected $fillable = ['item_id', 'checkout_id', 'room_id', 'quantity'];
+    protected $fillable = ['item_id', 'checkout_id', 'rack_id', 'quantity', 'fullCheckout', 'newCode'];
 
     protected $table = 'checkout_item';
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
+use App\Models\InviteCode;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -26,18 +27,18 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
-        $limit = isset($validated['limit']) ? $validated['limit'] : 10;
-        $filters = isset($validated['search']) ? $validated['search'] : null;
-        $orderBy = isset($validated['order_by']) ? $validated['order_by'] : 'created_at';
-        $order = isset($validated['order']) ? $validated['order'] : 'desc';
+        $limit = $validated['limit'] ?? 10;
+        $search = $validated['search'] ?? null;
+        $orderBy = $validated['orderBy'] ?? 'created_at';
+        $order = $validated['order'] ?? 'desc';
 
         $query = User::query();
-        if ($filters) {
-            $query->where('surname', 'like', '%' . $filters . '%')
-                ->orWhere('name', 'like', '%' . $filters . '%')
-                ->orWhere('patronymic', 'like', '%' . $filters . '%')
-                ->orWhere('email', 'like', '%' . $filters . '%')
-                ->orWhere('phone', 'like', '%' . $filters . '%');
+        if ($search) {
+            $query->where('surname', 'like', '%' . $search . '%')
+                ->orWhere('name', 'like', '%' . $search . '%')
+                ->orWhere('patronymic', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('phone', 'like', '%' . $search . '%');
         }
 
         $users = $query->orderBy($orderBy, $order)->paginate($limit);
@@ -70,6 +71,10 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $invite_code = InviteCode::where('user_id', $user->id)->first();
+        if ($invite_code) {
+            $invite_code->delete();
+        }
         $user->delete();
     }
 }

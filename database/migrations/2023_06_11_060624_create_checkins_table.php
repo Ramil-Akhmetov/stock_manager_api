@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Room;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -18,9 +19,10 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->foreignIdFor(Supplier::class);
             $table->foreignIdFor(User::class);
-            $table->schemalessAttributes('extra_attributes');
+            $table->foreignIdFor(Room::class);
+//            $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
-            $table->softDeletes();
+//            $table->softDeletes();
         });
     }
 

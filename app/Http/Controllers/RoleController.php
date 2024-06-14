@@ -15,10 +15,10 @@ class RoleController extends Controller
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['permission:roles.create'], ['only' => ['store']]);
-        $this->middleware(['permission:roles.read'], ['only' => ['index', 'show']]);
-        $this->middleware(['permission:roles.update'], ['only' => ['update']]);
-        $this->middleware(['permission:roles.delete'], ['only' => ['destroy']]);
+//        $this->middleware(['permission:roles.create'], ['only' => ['store']]);
+//        $this->middleware(['permission:roles.read'], ['only' => ['index', 'show']]);
+//        $this->middleware(['permission:roles.update'], ['only' => ['update']]);
+//        $this->middleware(['permission:roles.delete'], ['only' => ['destroy']]);
     }
 
     /**

@@ -17,10 +17,10 @@ class CheckinController extends Controller
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['permission:checkins.create'], ['only' => ['store']]);
-        $this->middleware(['permission:checkins.read'], ['only' => ['index', 'show']]);
-        $this->middleware(['permission:checkins.update'], ['only' => ['update']]);
-        $this->middleware(['permission:checkins.delete'], ['only' => ['destroy']]);
+//        $this->middleware(['permission:checkins.create'], ['only' => ['store']]);
+//        $this->middleware(['permission:checkins.read'], ['only' => ['index', 'show']]);
+//        $this->middleware(['permission:checkins.update'], ['only' => ['update']]);
+//        $this->middleware(['permission:checkins.delete'], ['only' => ['destroy']]);
     }
 
     /**
@@ -43,19 +43,21 @@ class CheckinController extends Controller
             'user_id' => $request->user()->id,
         ];
 
-        //TODO maybe should use event
         $checkin = DB::transaction(function () use ($validated) {
             $checkin = Checkin::create($validated);
 
             foreach ($validated['items'] as $item) {
-                $new_item = Item::create($item);
-                $checkin->items()->attach($new_item->id, [
-                    'quantity' => $new_item->quantity,
-                    'room_id' => $new_item->room_id,
+                $item += [
+                    'room_id' => $validated['room_id'],
+                ];
+                $db_item = Item::create($item);
+                $checkin->items()->attach($db_item->id, [
+                    'quantity' => $db_item->quantity,
                 ]);
             }
             return $checkin;
         });
+
         return new CheckinResource($checkin);
     }
 
@@ -70,11 +72,70 @@ class CheckinController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatecheckinRequest $request, Checkin $checkin)
+    public function update(UpdateCheckinRequest $request, Checkin $checkin)
     {
-        //TODO add update
-        $checkin->update($request->validated());
-        return new CheckinResource($checkin);
+        $validated = $request->validated();
+
+        $validated += [
+            'user_id' => $request->user()->id,
+        ];
+
+//        foreach ($validated['items'] as $item) {
+//            $item += [
+//                'room_id' => $validated['room_id'],
+//            ];
+//            $existed_db_item = Item::where('id', $item['id'])->first();
+//            return response()->json([
+//                'validated' => $existed_db_item,
+//            ]);
+//            if ($existed_db_item->checkins->where('checkin_id', $checkin->id)->count() == 0) {
+//                $new_item = Item::create($item);
+//                $checkin->items()->attach($new_item->id, [
+//                    'quantity' => $new_item->quantity,
+//                ]);
+//            } else {
+//                $checkin->items()->updateExistingPivot($item['id'], [
+//                    'quantity' => $item['quantity'],
+//                ]);
+//            }
+//        }
+
+
+        $updated_checkin = DB::transaction(function () use ($checkin, $validated) {
+            $checkin->update($validated);
+            foreach ($validated['items'] as $item) {
+                $item += [
+                    'room_id' => $validated['room_id'],
+                ];
+                if (!isset($item['id'])) {
+                    $new_item = Item::create($item);
+                    $checkin->items()->attach($new_item->id, [
+                        'quantity' => $new_item->quantity,
+                    ]);
+                } else {
+                    $existed_db_item = Item::where('id', $item['id'])->first();
+                    $existed_db_item->update($item);
+                    $checkin->items()->updateExistingPivot($item['id'], [
+                        'quantity' => $item['quantity'],
+                    ]);
+                }
+//                $existed_db_item = Item::where('id', $item['id'])->first();
+//
+//                if ($existed_db_item->checkins()->where('checkin_id', $checkin->id)->count() == 0) {
+//                    $new_item = Item::create($item);
+//                    $checkin->items()->attach($new_item->id, [
+//                        'quantity' => $new_item->quantity,
+//                    ]);
+//                } else {
+//                    $existed_db_item->update($item);
+//                    $checkin->items()->updateExistingPivot($item['id'], [
+//                        'quantity' => $item['quantity'],
+//                    ]);
+//                }
+            }
+            return $checkin;
+        });
+        return new CheckinResource($updated_checkin);
     }
 
     /**

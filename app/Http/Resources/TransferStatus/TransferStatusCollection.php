@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Customer;
+namespace App\Http\Resources\TransferStatus;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CustomerCollection extends ResourceCollection
+class TransferStatusCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

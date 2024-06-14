@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Rack;
+use App\Models\Room;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -18,10 +20,12 @@ class CheckinFactory extends Factory
      */
     public function definition(): array
     {
+        $room_id = Room::where('room_type_id', 1)->get()->random()->id;
         return [
             'note' => fake()->text(),
             'supplier_id' => Supplier::all()->random()->id,
             'user_id' => User::all()->random()->id,
+            'room_id' => $room_id,
         ];
     }
 }

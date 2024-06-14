@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::before(function ($user, $ability) {
-            return $user->hasRole('Super-Admin') ? true : null;
+            return $user->hasRole('Администратор') ? true : null;
         });
 
         //TODO check verifing email, maybe should hold it in fronted instead

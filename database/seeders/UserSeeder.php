@@ -19,16 +19,23 @@ class UserSeeder extends Seeder
         // ]);
         // $user->assignRole('Super-Admin');
 
-        $user = User::factory()->create([
+        $admin = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@email.com',
         ]);
-        $user->assignRole('Admin');
+        $admin->assignRole('Администратор');
 
         $user = User::factory()->create([
             'name' => 'user',
             'email' => 'user@email.com',
         ]);
+        $user->assignRole('Ответственное лицо');
+
+        $user = User::factory()->create([
+            'name' => 'keeper',
+            'email' => 'user2@email.com',
+        ]);
+        $user->assignRole('Кладовщик');
 
         User::factory(10)->create();
     }

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Group;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateGroupRequest extends FormRequest
+class UpdateRackRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,7 +22,7 @@ class UpdateGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string',
+            //
         ];
     }
 }

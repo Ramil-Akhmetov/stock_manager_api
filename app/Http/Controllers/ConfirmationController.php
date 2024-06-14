@@ -18,10 +18,10 @@ class ConfirmationController extends Controller
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['permission:confirmations.create'], ['only' => ['store']]);
-        $this->middleware(['permission:confirmations.read'], ['only' => ['index', 'show']]);
-        $this->middleware(['permission:confirmations.update'], ['only' => ['update']]);
-        $this->middleware(['permission:confirmations.delete'], ['only' => ['destroy']]);
+//        $this->middleware(['permission:confirmations.create'], ['only' => ['store']]);
+//        $this->middleware(['permission:confirmations.read'], ['only' => ['index', 'show']]);
+//        $this->middleware(['permission:confirmations.update'], ['only' => ['update']]);
+//        $this->middleware(['permission:confirmations.delete'], ['only' => ['destroy']]);
     }
 
     /**
@@ -44,7 +44,7 @@ class ConfirmationController extends Controller
         ];
         $confirmation = DB::transaction(function () use ($validated) {
             $confirmation = Confirmation::create($validated);
-            ConfirmationEvent::dispatch($confirmation, 'store');
+//            ConfirmationEvent::dispatch($confirmation, 'store');
             return $confirmation;
         });
         return new ConfirmationResource($confirmation);

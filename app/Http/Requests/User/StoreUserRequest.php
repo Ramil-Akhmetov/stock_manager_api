@@ -36,6 +36,8 @@ class StoreUserRequest extends FormRequest
 
     public function validated($key = null, $default = null)
     {
+        $data = $this->validator->validated();
+
         if ($this->has('photo') && $this->photo) {
             $data['photo'] = $this->photo->store('images', 'public');
         }

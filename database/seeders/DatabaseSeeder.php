@@ -19,15 +19,17 @@ class DatabaseSeeder extends Seeder
 
             CategorySeeder::class,
             TypeSeeder::class,
-            GroupSeeder::class,
             RoomTypeSeeder::class,
             RoomSeeder::class,
+
+            RackSeeder::class,
+
             ItemSeeder::class,
             ConfirmationSeeder::class,
-            CustomerSeeder::class,
             SupplierSeeder::class,
             CheckinSeeder::class,
             CheckoutSeeder::class,
+            TransferStatusSeeder::class,
             TransferSeeder::class,
             ResponsibilitySeeder::class,
             InviteCodeSeeder::class,

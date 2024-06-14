@@ -15,10 +15,10 @@ class RoomTypeController extends Controller
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['permission:room_types.create'], ['only' => ['store']]);
-        $this->middleware(['permission:room_types.read'], ['only' => ['index', 'show']]);
-        $this->middleware(['permission:room_types.update'], ['only' => ['update']]);
-        $this->middleware(['permission:room_types.delete'], ['only' => ['destroy']]);
+//        $this->middleware(['permission:room_types.create'], ['only' => ['store']]);
+//        $this->middleware(['permission:room_types.read'], ['only' => ['index', 'show']]);
+//        $this->middleware(['permission:room_types.update'], ['only' => ['update']]);
+//        $this->middleware(['permission:room_types.delete'], ['only' => ['destroy']]);
     }
 
     /**

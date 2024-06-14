@@ -15,10 +15,10 @@ class CategoryController extends Controller
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['permission:categories.create'], ['only' => ['store']]);
-        $this->middleware(['permission:categories.read'], ['only' => ['index', 'show']]);
-        $this->middleware(['permission:categories.update'], ['only' => ['update']]);
-        $this->middleware(['permission:categories.delete'], ['only' => ['destroy']]);
+//        $this->middleware(['permission:categories.create'], ['only' => ['store']]);
+//        $this->middleware(['permission:categories.read'], ['only' => ['index', 'show']]);
+//        $this->middleware(['permission:categories.update'], ['only' => ['update']]);
+//        $this->middleware(['permission:categories.delete'], ['only' => ['destroy']]);
     }
 
     /**
@@ -26,8 +26,19 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $filters = $request->all('search');
-        $categories = Category::filter($filters)->paginate();
+        $validated = $request->all();
+
+        $limit = $validated['limit'] ?? Category::all()->count();
+        $search = $validated['search'] ?? null;
+        $orderBy = $validated['orderBy'] ?? 'created_at';
+        $order = $validated['order'] ?? 'desc';
+
+        $query = Category::query();
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $categories = $query->orderBy($orderBy, $order)->paginate($limit);
         return new CategoryCollection($categories);
     }
 

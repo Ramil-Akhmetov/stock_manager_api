@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Category;
-use App\Models\Group;
 use App\Models\Room;
 use App\Models\Type;
 use Illuminate\Database\Migrations\Migration;
@@ -21,12 +20,11 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedFloat('quantity')->nullable();
             $table->string('unit')->nullable();
-            $table->text('photo')->nullable();
             $table->foreignIdFor(Category::class)->nullable();
             $table->foreignIdFor(Type::class)->nullable();
-            $table->foreignIdFor(Group::class)->nullable();
             $table->foreignIdFor(Room::class);
-            $table->schemalessAttributes('extra_attributes');
+            $table->foreignIdFor(\App\Models\Rack::class)->nullable();
+//            $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -20,7 +20,7 @@ class ResponsibilityFactory extends Factory
     {
         return [
             'start_date' => fake()->date(),
-            'end_date' => fake()->date(),
+            'end_date' => date('2025_01_01'),
             'user_id' => User::all()->random()->id,
             'room_id' => Room::all()->random()->id,
         ];

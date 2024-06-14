@@ -5,18 +5,17 @@ namespace App\Models;
 use App\Traits\LogActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
 class Room extends Model
 {
-    use HasFactory, SoftDeletes, LogActivity;
+    use HasFactory, LogActivity;
 
     protected $fillable = ['name', 'number', 'user_id', 'room_type_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
-    protected $with = ['room_type'];
+    protected $with = ['room_type', 'user', 'racks'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
@@ -31,6 +30,16 @@ class Room extends Model
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function racks()
+    {
+        return $this->hasMany(Rack::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function responsibilities()
@@ -60,5 +69,16 @@ class Room extends Model
     public function scopeSearch($query, $s)
     {
         $query->where('name', 'like', "%$s%");
+    }
+
+    public function currentResponsible()
+    {
+        return $this->hasOne(Responsibility::class)
+            ->where('start_date', '<=', now())
+            ->where(function ($query) {
+                $query->where('end_date', '>=', now())
+                    ->orWhereNull('end_date');
+            })
+            ->with('user');
     }
 }

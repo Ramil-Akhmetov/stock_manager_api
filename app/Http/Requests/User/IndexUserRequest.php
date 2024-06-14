@@ -23,7 +23,7 @@ class IndexUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_by' => 'nullable|string|in:surname,email,phone',
+            'orderBy' => 'nullable|string|in:surname,email,phone',
 
             'order' => 'nullable|string|in:asc,desc',
             'limit' => 'nullable|integer|min:1',

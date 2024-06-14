@@ -16,10 +16,10 @@ class ResponsibilityController extends Controller
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['permission:responsibilities.create'], ['only' => ['store']]);
-        $this->middleware(['permission:responsibilities.read'], ['only' => ['index', 'show']]);
-        $this->middleware(['permission:responsibilities.update'], ['only' => ['update']]);
-        $this->middleware(['permission:responsibilities.delete'], ['only' => ['destroy']]);
+//        $this->middleware(['permission:responsibilities.create'], ['only' => ['store']]);
+//        $this->middleware(['permission:responsibilities.read'], ['only' => ['index', 'show']]);
+//        $this->middleware(['permission:responsibilities.update'], ['only' => ['update']]);
+//        $this->middleware(['permission:responsibilities.delete'], ['only' => ['destroy']]);
     }
 
     /**

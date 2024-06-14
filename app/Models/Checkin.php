@@ -5,18 +5,17 @@ namespace App\Models;
 use App\Traits\LogActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
 class Checkin extends Model
 {
-    use HasFactory, SoftDeletes, LogActivity;
+    use HasFactory, LogActivity;
 
-    protected $fillable = ['note', 'user_id', 'supplier_id', 'extra_attributes'];
+    protected $fillable = ['note', 'user_id', 'supplier_id', 'extra_attributes', 'room_id'];
 
     protected $hidden = ['deleted_at'];
 
-    protected $with = ['items'];
+    protected $with = ['items', 'supplier', 'user', 'room'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
@@ -33,10 +32,15 @@ class Checkin extends Model
         return $this->belongsToMany(Item::class)
             ->using(CheckinItem::class)
             ->withPivot([
-                'room_id',
                 'quantity',
+                'rack_id',
             ])
             ->withTimestamps();
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
     }
 
     public function user()

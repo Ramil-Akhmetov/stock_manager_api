@@ -23,15 +23,21 @@ class UpdateItemRequest extends FormRequest
     {
         $item = request()->route('item');
         return [
-            'name' => 'sometimes',
-            'code' => 'sometimes|unique:items,code,'. $item->id,
-            'quantity' => 'sometimes',
-            'unit' => 'nullable',
-            'photo' => 'nullable|image',
-            'category_id' => 'nullable|exists:categories,id',
-            'type_id' => 'nullable|exists:types,id',
-            'room_id' => 'sometimes|exists:rooms,id',
-            'group_id' => 'nullable|exists:groups,id',
+            'name' => 'required',
+            'code' => 'required|unique:items,code,' . $item->id,
+            'quantity' => 'required',
+            'unit' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'type_id' => 'required|exists:types,id',
         ];
+    }
+
+    public function validated($key = null, $default = null)
+    {
+        $data = $this->validator->validated();
+        if ($this->has('photo') && $this->photo && $this->photo != 'null') {
+            $data['photo'] = $this->photo->store('images', 'public');
+        }
+        return $data;
     }
 }

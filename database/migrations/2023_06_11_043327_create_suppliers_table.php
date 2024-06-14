@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('email')->unique();
             $table->string('company');
-            $table->schemalessAttributes('extra_attributes');
+//            $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
-            $table->softDeletes();
+//            $table->softDeletes();
         });
     }
 

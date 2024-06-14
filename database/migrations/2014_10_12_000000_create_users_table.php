@@ -21,11 +21,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->text('photo')->nullable();
-            $table->schemalessAttributes('extra_attributes');
+//            $table->schemalessAttributes('extra_attributes');
             //todo should delete remember token
             $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes();
+//            $table->softDeletes();
         });
     }
 

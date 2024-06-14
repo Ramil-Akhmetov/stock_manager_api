@@ -20,9 +20,9 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Room::class);
-            $table->schemalessAttributes('extra_attributes');
+//            $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
-            $table->softDeletes();
+//            $table->softDeletes();
         });
     }
 

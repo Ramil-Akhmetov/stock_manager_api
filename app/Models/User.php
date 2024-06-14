@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\LogActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -15,13 +14,14 @@ use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, LogActivity;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, LogActivity;
 
     protected $fillable = ['name', 'surname', 'patronymic', 'email', 'phone', 'password', 'photo'];
 
     //TODO maybe delete email_verified_at from hidden
     //TODO should think when user must verify email
     protected $hidden = ['password', 'remember_token', 'deleted_at'];
+    protected $with = ['roles'];
 
     protected $casts = [
         'email_verified_at' => 'datetime',

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('room_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->schemalessAttributes('extra_attributes');
+//            $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
-            $table->softDeletes();
+//            $table->softDeletes();
         });
     }
 

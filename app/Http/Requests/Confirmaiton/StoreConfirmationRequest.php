@@ -23,7 +23,6 @@ class StoreConfirmationRequest extends FormRequest
     {
         return [
             'item_id' => 'required|exists:items,id',
-            'quantity' => 'numeric',
         ];
     }
 }

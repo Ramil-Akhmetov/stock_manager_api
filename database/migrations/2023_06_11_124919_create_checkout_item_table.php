@@ -18,8 +18,12 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Checkout::class);
             $table->foreignIdFor(Item::class);
-            $table->foreignIdFor(Room::class);
-            $table->unsignedFloat('quantity')->nullable();
+
+            $table->boolean('fullCheckout');
+            $table->string('newCode')->nullable();
+            $table->foreignIdFor(\App\Models\Rack::class, 'rack_id')->nullable();
+            $table->integer('quantity');
+
             $table->timestamps();
         });
     }

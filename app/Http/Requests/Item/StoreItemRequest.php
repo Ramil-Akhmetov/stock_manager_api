@@ -30,7 +30,6 @@ class StoreItemRequest extends FormRequest
             'category_id' => 'nullable|exists:categories,id',
             'type_id' => 'nullable|exists:types,id',
             'room_id' => 'required|exists:rooms,id',
-            'group_id' => 'nullable|exists:groups,id',
         ];
     }
 

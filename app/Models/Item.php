@@ -10,9 +10,9 @@ use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
 class Item extends Model
 {
-    use HasFactory, SoftDeletes, LogActivity;
+    use HasFactory, LogActivity, SoftDeletes;
 
-    protected $fillable = ['code', 'name', 'quantity', 'unit', 'photo', 'category_id', 'type_id', 'group_id', 'room_id', 'extra_attributes'];
+    protected $fillable = ['code', 'name', 'quantity', 'unit', 'category_id', 'type_id', 'room_id', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
@@ -20,22 +20,34 @@ class Item extends Model
         'extra_attributes' => SchemalessAttributes::class,
     ];
 
-    protected $with = ['category', 'type', 'group', 'room'];
+    protected $with = ['category', 'type', 'room', 'rack', 'lastConfirmation'];
 
     //region Relationships
+
+    public function from_rack()
+    {
+        return $this->belongsTo(Rack::class, 'pivot_from_rack_id');
+    }
+
+    public function to_rack()
+    {
+        return $this->belongsTo(Rack::class, 'pivot_to_rack_id');
+    }
+
+
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
+    public function rack()
+    {
+        return $this->belongsTo(\App\Models\Rack::class);
+    }
+
     public function type()
     {
         return $this->belongsTo(Type::class);
-    }
-
-    public function group()
-    {
-        return $this->belongsTo(Group::class);
     }
 
     public function room()
@@ -48,8 +60,8 @@ class Item extends Model
         return $this->belongsToMany(Checkin::class)
             ->using(CheckinItem::class)
             ->withPivot([
-                'room_id',
                 'quantity',
+                'rack_id',
             ])
             ->withTimestamps();
     }
@@ -59,7 +71,6 @@ class Item extends Model
         return $this->belongsToMany(Checkout::class)
             ->using(CheckoutItem::class)
             ->withPivot([
-                'room_id',
                 'quantity',
             ])
             ->withTimestamps();
@@ -70,10 +81,20 @@ class Item extends Model
         return $this->belongsToMany(Transfer::class)
             ->using(ItemTransfer::class)
             ->withPivot([
-                'room_id',
+                'fullTransfer',
+                'from_rack_id',
+                'to_rack_id',
+                'newCode',
                 'quantity',
             ])
-            ->withTimestamps();
+            ->withTimestamps()
+            ->with(['pivot.fromRack', 'pivot.toRack']);
+    }
+
+    // Custom relationship to the pivot table
+    public function itemTransfers()
+    {
+        return $this->hasMany(ItemTransfer::class);
     }
 
     public function confirmations()
@@ -105,5 +126,12 @@ class Item extends Model
     {
         $query->where('code', 'like', "%$s%")
             ->orWhere('name', 'like', "%$s%");
+    }
+
+    public function lastConfirmation()
+    {
+        return $this->hasOne(Confirmation::class)
+            ->with('user')
+            ->latest();
     }
 }

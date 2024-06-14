@@ -13,6 +13,11 @@ class RoomTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        RoomType::factory(3)->create();
+        RoomType::factory()->create([
+            'name' => 'Склад',
+        ]);
+        RoomType::factory()->create([
+            'name' => 'Кабинет',
+        ]);
     }
 }
