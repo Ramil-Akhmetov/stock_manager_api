@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Permission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 
 class PermissionSeeder extends Seeder
@@ -35,11 +35,6 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'types.read']);
         Permission::create(['name' => 'types.update']);
         Permission::create(['name' => 'types.delete']);
-
-        Permission::create(['name' => 'groups.create']);
-        Permission::create(['name' => 'groups.read']);
-        Permission::create(['name' => 'groups.update']);
-        Permission::create(['name' => 'groups.delete']);
 
         Permission::create(['name' => 'room_types.create']);
         Permission::create(['name' => 'room_types.read']);
@@ -82,6 +77,8 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'transfers.delete']);
 
         Permission::create(['name' => 'permissions.read']);
+
+        Permission::create(['name' => 'activities.read']);
 
         Permission::create(['name' => 'roles.create']);
         Permission::create(['name' => 'roles.read']);

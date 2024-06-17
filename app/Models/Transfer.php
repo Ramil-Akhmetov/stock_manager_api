@@ -2,20 +2,22 @@
 
 namespace App\Models;
 
+use App\Traits\LogActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
 class Transfer extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, LogActivity;
 
-    protected $fillable = ['note', 'user_id', 'room_id', 'extra_attributes'];
+//    protected $guarded = false;
+
+    protected $fillable = ['user_id', 'from_room_id', 'to_room_id', 'transfer_status_id', 'reason', 'extra_attributes'];
 
     protected $hidden = ['deleted_at'];
 
-    protected $with = ['items'];
+    protected $with = ['items', 'transfer_status', 'user', 'items', 'from_room', 'to_room'];
 
     public $casts = [
         'extra_attributes' => SchemalessAttributes::class,
@@ -31,14 +33,33 @@ class Transfer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function transfer_status()
+    {
+        return $this->belongsTo(TransferStatus::class);
+    }
+
     public function items()
     {
         return $this->belongsToMany(Item::class)
+            ->using(ItemTransfer::class)
             ->withPivot([
-                'room_id',
+                'fullTransfer',
+                'from_rack_id',
+                'to_rack_id',
+                'newCode',
                 'quantity',
             ])
             ->withTimestamps();
+    }
+
+    public function from_room()
+    {
+        return $this->belongsTo(Room::class);
+    }
+
+    public function to_room()
+    {
+        return $this->belongsTo(Room::class);
     }
 
     public function scopeFilter($query, array $filters)

@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('transfers', function (Blueprint $table) {
             $table->id();
-            $table->text('note');
+            $table->text('reason');
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Room::class); //from_room_id
-            $table->schemalessAttributes('extra_attributes');
+            $table->foreignIdFor(\App\Models\TransferStatus::class);
+            $table->foreignIdFor(Room::class, "from_room_id");
+            $table->foreignIdFor(Room::class, "to_room_id");
+//            $table->schemalessAttributes('extra_attributes');
             $table->timestamps();
-            $table->softDeletes();
+//            $table->softDeletes();
         });
     }
 

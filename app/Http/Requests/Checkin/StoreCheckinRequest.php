@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Checkin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class StoreCheckinRequest extends FormRequest
 {
@@ -24,17 +27,38 @@ class StoreCheckinRequest extends FormRequest
         return [
             'note' => 'nullable|string',
             'supplier_id' => 'required|integer|exists:suppliers,id',
+            'room_id' => 'required|exists:rooms,id',
 
             'items' => 'required|array|min:1',
             'items.*.name' => 'required',
+            'items.*.rack_id' => 'required|exists:racks,id',
             'items.*.code' => 'required|unique:items,code',
-            'items.*.quantity' => 'required_with:items.*.unit',
-            'items.*.unit' => 'required_with:items.*.quantity',
-            'items.*.photo' => 'nullable|image',
+            'items.*.quantity' => 'required|numeric|min:1|max:9999',
+            'items.*.unit' => 'required',
             'items.*.category_id' => 'nullable|exists:categories,id',
             'items.*.type_id' => 'nullable|exists:types,id',
-            'items.*.room_id' => 'nullable|exists:rooms,id',
-            'items.*.group_id' => 'nullable|exists:groups,id',
         ];
+    }
+
+    public function validated($key = null, $default = null)
+    {
+        $data = parent::validated($key, $default);
+
+        // Custom validation to ensure each item's code is unique within the request payload
+        $codes = collect($data['items'])->pluck('code');
+        if ($codes->count() !== $codes->unique()->count()) {
+            throw new HttpResponseException(
+                response()->json([
+                    'message' => 'Коды должны быть уникальными',
+                    'errors' => [
+                        'items.*.code' => [
+                            'Коды должны быть уникальными',
+                        ]
+                    ]
+                ], 422)
+            );
+        }
+
+        return $data;
     }
 }

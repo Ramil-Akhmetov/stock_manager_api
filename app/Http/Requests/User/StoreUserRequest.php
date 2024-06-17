@@ -23,24 +23,19 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => 'required|string',
-            'roles' => 'array|min:1',
-            'roles.*' => 'string',
+            'roles' => 'required',
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'patronymic' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users,email',
+            'email' => 'sometimes|string|email|unique:users,email',
+            'phone' => 'required|string|unique:users,phone',
             'photo' => 'nullable|image',
-            'password' => 'required|string|confirmed|min:8',
         ];
     }
 
     public function validated($key = null, $default = null)
     {
         $data = $this->validator->validated();
-        if ($this->input('password')) {
-            $data['password'] = Hash::make($this->input('password'));
-        }
 
         if ($this->has('photo') && $this->photo) {
             $data['photo'] = $this->photo->store('images', 'public');

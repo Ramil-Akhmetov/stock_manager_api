@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Checkout;
 
+use App\Models\Item;
+use App\Models\Room;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCheckoutRequest extends FormRequest
@@ -22,11 +24,45 @@ class StoreCheckoutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'note' => 'nullable|string',
-            'customer_id' => 'required|integer|exists:customers,id',
+            'note' => 'required|string',
 
-            'item_ids' => 'required|array|min:1',
-            'item_ids.*' => 'integer|exists:items,id',
+            'room_id' => 'required|integer|exists:rooms,id',
+
+            'items' => 'required|array|min:1',
+            'items.*.id' => 'required|integer|exists:items,id',
+            'items.*.fullCheckout' => 'nullable|boolean',
+
+            'items.*.quantity' => 'nullable|numeric|min:1'
         ];
+    }
+
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param \Illuminate\Validation\Validator $validator
+     */
+    public function withValidator($validator)
+    {
+        $items = $this->input('items') ?? [];
+
+        foreach ($items as $index => $item) {
+            $validator->sometimes("items.$index.quantity", 'required', function () use ($item) {
+                return isset($item['fullCheckout']) && $item['fullCheckout'] === false;
+            });
+        }
+
+        $validator->after(function ($validator) use ($items) {
+            foreach ($items as $index => $item) {
+                if (isset($item['fullCheckout']) && $item['fullCheckout'] === false) {
+                    $itemId = $item['id'];
+                    $quantity = $item['quantity'] ?? 0;
+                    $existingItem = Item::find($itemId);
+                    if ($existingItem && $quantity >= $existingItem->quantity) {
+                        $validator->errors()->add("items.$index.quantity", "The quantity cannot be greater or equal than the existing quantity of {$existingItem->quantity}.");
+                    }
+                }
+            }
+        });
     }
 }

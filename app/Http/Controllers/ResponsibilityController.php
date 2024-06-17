@@ -7,6 +7,7 @@ use App\Http\Requests\Responsibility\UpdateResponsibilityRequest;
 use App\Http\Resources\Responsibility\ResponsibilityCollection;
 use App\Http\Resources\Responsibility\ResponsibilityResource;
 use App\Models\Responsibility;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ResponsibilityController extends Controller
@@ -15,10 +16,10 @@ class ResponsibilityController extends Controller
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['permission:responsibilities.create'], ['only' => ['store']]);
-        $this->middleware(['permission:responsibilities.read'], ['only' => ['index', 'show']]);
-        $this->middleware(['permission:responsibilities.update'], ['only' => ['update']]);
-        $this->middleware(['permission:responsibilities.delete'], ['only' => ['destroy']]);
+//        $this->middleware(['permission:responsibilities.create'], ['only' => ['store']]);
+//        $this->middleware(['permission:responsibilities.read'], ['only' => ['index', 'show']]);
+//        $this->middleware(['permission:responsibilities.update'], ['only' => ['update']]);
+//        $this->middleware(['permission:responsibilities.delete'], ['only' => ['destroy']]);
     }
 
     /**
@@ -36,9 +37,9 @@ class ResponsibilityController extends Controller
     public function store(StoreResponsibilityRequest $request)
     {
         $validated = $request->validated();
-        $validated += [
-            'user_id' => $request->user()->id,
-        ];
+        if (!isset($validated['start_date']) || $validated['start_date'] === null) {
+            $validated += ['start_date' => Carbon::now()->toDateString()];
+        }
         $responsibility = Responsibility::create($validated);
 //        ResponsibilityEvent::dispatch($responsibility, 'store');
         return new ResponsibilityResource($responsibility);

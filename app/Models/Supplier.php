@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\LogActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\SchemalessAttributes\Casts\SchemalessAttributes;
 
 class Supplier extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, LogActivity;
 
     protected $fillable = ['name', 'surname', 'patronymic', 'phone', 'email', 'company', 'extra_attributes'];
 
@@ -24,10 +24,13 @@ class Supplier extends Model
         return $this->extra_attributes->modelScope();
     }
 
+    //region Relationships
     public function checkins()
     {
         return $this->hasMany(Checkin::class);
     }
+
+    //endregion
 
     public function scopeFilter($query, array $filters)
     {

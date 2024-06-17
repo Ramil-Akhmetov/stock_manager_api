@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,8 +21,8 @@ class CheckoutFactory extends Factory
     {
         return [
             'note' => fake()->text(),
-            'customer_id' => Customer::all()->random()->id,
             'user_id' => User::all()->random()->id,
+            'room_id' => Room::where('room_type_id', 1)->get()->random()->id,
         ];
     }
 }

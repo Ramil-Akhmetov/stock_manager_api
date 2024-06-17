@@ -18,7 +18,6 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => Str::random(5),
             'name' => fake()->word(),
         ];
     }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\InviteCode;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -24,27 +27,49 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'patronymic' => 'required|string|max:255',
+            'invite_code' => 'required|string',
             'email' => 'required|string|email|max:255|unique:users',
-            'photo' => 'nullable|image',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
+            'password_confirmation' => 'required|string',
         ];
     }
 
     public function validated($key = null, $default = null)
     {
         $data = $this->validator->validated();
+        if ($data['password'] !== $data['password_confirmation']) {
+            throw new HttpResponseException(
+                response()->json([
+                    'message' => 'The password confirmation does not match',
+                    'errors' => [
+                        'password_confirmation' => [
+                            'The password confirmation does not match',
+                        ]
+                    ]
+                ], 422)
+            );
+        }
+        //TODO check how long should be remember_token
+        //TODO should delete remember_token from everywhere
+
+        $data['remember_token'] = Str::random(60);
+
+        if (!InviteCode::where('code', $data['invite_code'])->first()) {
+            throw new HttpResponseException(
+                response()->json([
+                    'message' => 'The invite code is invalid',
+                    'errors' => [
+                        'invite_code' => [
+                            'The invite code is invalid',
+                        ]
+                    ]
+                ], 422)
+            );
+        }
+
         if ($this->input('password')) {
             $data['password'] = Hash::make($this->input('password'));
         }
-        $data['remember_token'] = Str::random(10);
-
-        if ($this->has('photo') && $this->photo) {
-            $data['photo'] = $this->photo->store('images', 'public');
-        }
-
         return $data;
     }
 }

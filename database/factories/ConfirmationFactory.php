@@ -21,7 +21,6 @@ class ConfirmationFactory extends Factory
         return [
             'item_id' => Item::all()->random()->id,
             'user_id' => User::all()->random()->id,
-            'quantity' => $this->faker->numberBetween(0, 200),
         ];
     }
 }

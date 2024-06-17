@@ -13,7 +13,7 @@ class PermissionController extends Controller
     {
         $this->middleware(['auth:api']);
 
-        $this->middleware(['permission:permissions.read'], ['only' => ['index', 'show']]);
+//        $this->middleware(['permission:permissions.read'], ['only' => ['index', 'show']]);
     }
 
     /**

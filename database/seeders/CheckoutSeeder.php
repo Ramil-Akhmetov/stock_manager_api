@@ -8,6 +8,7 @@ use App\Models\Room;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 
 class CheckoutSeeder extends Seeder
 {
@@ -17,14 +18,22 @@ class CheckoutSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        $checkins = Checkout::factory(10)->create();
+        $checkouts = Checkout::factory(10)->create();
 
-        foreach ($checkins as $checkin) {
+        foreach ($checkouts as $checkout) {
             $items = Item::factory(5)->create();
-            $checkin->items()->attach($items, [
-                'room_id' => Room::all()->random()->id,
-                'quantity' => $faker->numberBetween(1, 10),
-            ]);
+
+            foreach ($items as $item) {
+                $fullCheckout = $faker->boolean();
+
+                $quantity = $fullCheckout ? $item->quantity : $faker->numberBetween(1, $item->quantity);
+
+                $checkout->items()->attach($item, [
+                    'rack_id' => $item->rack_id,
+                    'fullCheckout' => $fullCheckout,
+                    'quantity' => $quantity,
+                ]);
+            }
         }
     }
 }

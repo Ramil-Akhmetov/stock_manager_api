@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Room;
+use App\Models\TransferStatus;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,9 +20,11 @@ class TransferFactory extends Factory
     public function definition(): array
     {
         return [
-            'note' => fake()->text(),
-            'room_id' => Room::all()->random()->id,
+            'reason' => fake()->text(),
             'user_id' => User::all()->random()->id,
+            'transfer_status_id' => TransferStatus::all()->random()->id,
+            'from_room_id' => Room::all()->random()->id,
+            'to_room_id' => Room::all()->random()->id,
         ];
     }
 }

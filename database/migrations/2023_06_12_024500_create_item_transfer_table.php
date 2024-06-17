@@ -16,11 +16,15 @@ return new class extends Migration
     {
         Schema::create('item_transfer', function (Blueprint $table) {
             $table->id();
-            $table->string('reason')->nullable();
+
+            $table->boolean('fullTransfer');
+            $table->string('newCode')->nullable();
+            $table->foreignIdFor(\App\Models\Rack::class, 'from_rack_id')->nullable();
+            $table->foreignIdFor(\App\Models\Rack::class, 'to_rack_id')->nullable();
+            $table->integer('quantity');
+
             $table->foreignIdFor(Transfer::class);
             $table->foreignIdFor(Item::class);
-            $table->foreignIdFor(Room::class); //to_room_id
-            $table->unsignedFloat('quantity')->nullable();
             $table->timestamps();
         });
     }

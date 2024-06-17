@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Checkin::class);
             $table->foreignIdFor(Item::class);
-            $table->foreignIdFor(Room::class);
+            $table->foreignIdFor(\App\Models\Rack::class)->nullable();
             $table->unsignedFloat('quantity')->nullable();
             $table->timestamps();
         });

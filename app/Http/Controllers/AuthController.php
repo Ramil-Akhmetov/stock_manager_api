@@ -6,25 +6,31 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
     public function register(RegisterRequest $request)
     {
         $validated = $request->validated();
-        $user = User::create($validated);
+        $user = User::whereHas('invite_code', function ($query) use ($validated) {
+            $query->where('code', $validated['invite_code']);
+        })->first();
+
+        $user->update($validated);
+        $user->invite_code()->delete();
+
+        dispatch(function () use ($user) {
+            event(new Registered($user));
+        });
 
         $token = $user->createToken('auth')->accessToken;
         return response()->json([
-            'token' => $token
+            'token' => $token,
         ]);
     }
-
     public function login(LoginRequest $request)
     {
         $validated = $request->validated();
@@ -34,11 +40,12 @@ class AuthController extends Controller
             $token = $user->createToken('auth')->accessToken;
             return response()->json([
                 'token' => $token,
+                'user' => $user, 
             ]);
         } else {
             return response()->json([
                 'message' => 'Invalid email or password',
-            ]);
+            ], 422);
         }
     }
 
